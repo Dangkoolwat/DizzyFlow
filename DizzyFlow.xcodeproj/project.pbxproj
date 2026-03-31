@@ -1,0 +1,578 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		CB05B5CB2F7BCE8C0023848D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB05B5B52F7BCE8B0023848D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB05B5BC2F7BCE8B0023848D;
+			remoteInfo = DizzyFlow;
+		};
+		CB05B5D52F7BCE8C0023848D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB05B5B52F7BCE8B0023848D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB05B5BC2F7BCE8B0023848D;
+			remoteInfo = DizzyFlow;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CB05B5BD2F7BCE8B0023848D /* DizzyFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DizzyFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB05B5CA2F7BCE8C0023848D /* DizzyFlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DizzyFlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB05B5D42F7BCE8C0023848D /* DizzyFlowUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DizzyFlowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		CB05B5BF2F7BCE8B0023848D /* DizzyFlow */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DizzyFlow;
+			sourceTree = "<group>";
+		};
+		CB05B5CD2F7BCE8C0023848D /* DizzyFlowTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DizzyFlowTests;
+			sourceTree = "<group>";
+		};
+		CB05B5D72F7BCE8C0023848D /* DizzyFlowUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DizzyFlowUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CB05B5BA2F7BCE8B0023848D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB05B5C72F7BCE8C0023848D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB05B5D12F7BCE8C0023848D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CB05B5B42F7BCE8B0023848D = {
+			isa = PBXGroup;
+			children = (
+				CB05B5BF2F7BCE8B0023848D /* DizzyFlow */,
+				CB05B5CD2F7BCE8C0023848D /* DizzyFlowTests */,
+				CB05B5D72F7BCE8C0023848D /* DizzyFlowUITests */,
+				CB05B5BE2F7BCE8B0023848D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CB05B5BE2F7BCE8B0023848D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB05B5BD2F7BCE8B0023848D /* DizzyFlow.app */,
+				CB05B5CA2F7BCE8C0023848D /* DizzyFlowTests.xctest */,
+				CB05B5D42F7BCE8C0023848D /* DizzyFlowUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CB05B5BC2F7BCE8B0023848D /* DizzyFlow */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB05B5DE2F7BCE8C0023848D /* Build configuration list for PBXNativeTarget "DizzyFlow" */;
+			buildPhases = (
+				CB05B5B92F7BCE8B0023848D /* Sources */,
+				CB05B5BA2F7BCE8B0023848D /* Frameworks */,
+				CB05B5BB2F7BCE8B0023848D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CB05B5BF2F7BCE8B0023848D /* DizzyFlow */,
+			);
+			name = DizzyFlow;
+			packageProductDependencies = (
+			);
+			productName = DizzyFlow;
+			productReference = CB05B5BD2F7BCE8B0023848D /* DizzyFlow.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CB05B5C92F7BCE8C0023848D /* DizzyFlowTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB05B5E12F7BCE8C0023848D /* Build configuration list for PBXNativeTarget "DizzyFlowTests" */;
+			buildPhases = (
+				CB05B5C62F7BCE8C0023848D /* Sources */,
+				CB05B5C72F7BCE8C0023848D /* Frameworks */,
+				CB05B5C82F7BCE8C0023848D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CB05B5CC2F7BCE8C0023848D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CB05B5CD2F7BCE8C0023848D /* DizzyFlowTests */,
+			);
+			name = DizzyFlowTests;
+			packageProductDependencies = (
+			);
+			productName = DizzyFlowTests;
+			productReference = CB05B5CA2F7BCE8C0023848D /* DizzyFlowTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CB05B5D32F7BCE8C0023848D /* DizzyFlowUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB05B5E42F7BCE8C0023848D /* Build configuration list for PBXNativeTarget "DizzyFlowUITests" */;
+			buildPhases = (
+				CB05B5D02F7BCE8C0023848D /* Sources */,
+				CB05B5D12F7BCE8C0023848D /* Frameworks */,
+				CB05B5D22F7BCE8C0023848D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CB05B5D62F7BCE8C0023848D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CB05B5D72F7BCE8C0023848D /* DizzyFlowUITests */,
+			);
+			name = DizzyFlowUITests;
+			packageProductDependencies = (
+			);
+			productName = DizzyFlowUITests;
+			productReference = CB05B5D42F7BCE8C0023848D /* DizzyFlowUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CB05B5B52F7BCE8B0023848D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					CB05B5BC2F7BCE8B0023848D = {
+						CreatedOnToolsVersion = 26.4;
+					};
+					CB05B5C92F7BCE8C0023848D = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = CB05B5BC2F7BCE8B0023848D;
+					};
+					CB05B5D32F7BCE8C0023848D = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = CB05B5BC2F7BCE8B0023848D;
+					};
+				};
+			};
+			buildConfigurationList = CB05B5B82F7BCE8B0023848D /* Build configuration list for PBXProject "DizzyFlow" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CB05B5B42F7BCE8B0023848D;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = CB05B5BE2F7BCE8B0023848D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CB05B5BC2F7BCE8B0023848D /* DizzyFlow */,
+				CB05B5C92F7BCE8C0023848D /* DizzyFlowTests */,
+				CB05B5D32F7BCE8C0023848D /* DizzyFlowUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CB05B5BB2F7BCE8B0023848D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB05B5C82F7BCE8C0023848D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB05B5D22F7BCE8C0023848D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CB05B5B92F7BCE8B0023848D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB05B5C62F7BCE8C0023848D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB05B5D02F7BCE8C0023848D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CB05B5CC2F7BCE8C0023848D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB05B5BC2F7BCE8B0023848D /* DizzyFlow */;
+			targetProxy = CB05B5CB2F7BCE8C0023848D /* PBXContainerItemProxy */;
+		};
+		CB05B5D62F7BCE8C0023848D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB05B5BC2F7BCE8B0023848D /* DizzyFlow */;
+			targetProxy = CB05B5D52F7BCE8C0023848D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CB05B5DC2F7BCE8C0023848D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 67GMSR6X5Y;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CB05B5DD2F7BCE8C0023848D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 67GMSR6X5Y;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		CB05B5DF2F7BCE8C0023848D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67GMSR6X5Y;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daangcool.dizzyflow.DizzyFlow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CB05B5E02F7BCE8C0023848D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67GMSR6X5Y;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daangcool.dizzyflow.DizzyFlow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		CB05B5E22F7BCE8C0023848D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67GMSR6X5Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daangcool.dizzyflow.DizzyFlowTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DizzyFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DizzyFlow";
+			};
+			name = Debug;
+		};
+		CB05B5E32F7BCE8C0023848D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67GMSR6X5Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daangcool.dizzyflow.DizzyFlowTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DizzyFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DizzyFlow";
+			};
+			name = Release;
+		};
+		CB05B5E52F7BCE8C0023848D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67GMSR6X5Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daangcool.dizzyflow.DizzyFlowUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = DizzyFlow;
+			};
+			name = Debug;
+		};
+		CB05B5E62F7BCE8C0023848D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 67GMSR6X5Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daangcool.dizzyflow.DizzyFlowUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = DizzyFlow;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CB05B5B82F7BCE8B0023848D /* Build configuration list for PBXProject "DizzyFlow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB05B5DC2F7BCE8C0023848D /* Debug */,
+				CB05B5DD2F7BCE8C0023848D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB05B5DE2F7BCE8C0023848D /* Build configuration list for PBXNativeTarget "DizzyFlow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB05B5DF2F7BCE8C0023848D /* Debug */,
+				CB05B5E02F7BCE8C0023848D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB05B5E12F7BCE8C0023848D /* Build configuration list for PBXNativeTarget "DizzyFlowTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB05B5E22F7BCE8C0023848D /* Debug */,
+				CB05B5E32F7BCE8C0023848D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB05B5E42F7BCE8C0023848D /* Build configuration list for PBXNativeTarget "DizzyFlowUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB05B5E52F7BCE8C0023848D /* Debug */,
+				CB05B5E62F7BCE8C0023848D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CB05B5B52F7BCE8B0023848D /* Project object */;
+}
