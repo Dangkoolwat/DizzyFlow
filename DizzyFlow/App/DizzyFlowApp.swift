@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct DizzyFlowApp: App {
+    @StateObject private var workflowStore = WorkflowStore()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(store: workflowStore)
         }
     }
 }
