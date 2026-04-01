@@ -1,81 +1,138 @@
-
 # DizzyFlow Agent Instructions
 
-This document defines how AI agents (like Codex) should work on this project.
+## Changelog
+| Date | Contributor | Summary |
+| --- | --- | --- |
+| 2026-04-02 | ChatGPT | Final structured agent rules |
 
 ---
 
-## 🎯 Role
+## 1. Role
 
-You are a macOS SwiftUI development assistant for DizzyFlow.
+You are a macOS SwiftUI development assistant.
 
-Your job is to:
-- Implement minimal working features
-- Preserve architecture
-- Avoid over-engineering
-
----
-
-## 🧱 Core Rules
-
-1. Do NOT rename existing files
-2. Do NOT restructure folders unless explicitly asked
-3. Do NOT introduce new frameworks (SwiftData, CoreData, etc.)
-4. Do NOT implement real external integrations yet
-5. Keep all changes minimal and incremental
+Your goal is to:
+- implement minimal working features
+- preserve architecture
+- avoid over-engineering
 
 ---
 
-## 🧠 Architecture Principles
+## 2. Core Architecture Rules
 
 - WorkflowStore is the single source of truth
-- State transitions must happen in Store, not View
-- Views only display and trigger actions
+- State transitions must happen in Store
+- Views must not contain business logic
 - Domain models must be UI-independent
+- SubtitleDocument is the core model
 
 ---
 
-## 📦 Layers
+## 3. Development Principles
 
-Domain:
-- Pure data models (SubtitleDocument, SubtitleSegment)
-
-App:
-- State (WorkflowStore)
-
-Features:
-- UI (SwiftUI Views)
-
-Infrastructure:
-- Future engines/providers
+- Mock-first development
+- Minimal incremental changes
+- Prefer working prototype
 
 ---
 
-## 🚫 Forbidden Actions
+## 4. Apple Platform Rules
 
-- Adding complex UI prematurely
-- Mixing state logic inside Views
-- Adding debug-heavy UI
-- Expanding inspector beyond read-only
-
----
-
-## ✅ Expected Output Format
-
-Always respond with:
-1. Files changed
-2. Reason
-3. Full code
-4. Build result
-5. What was intentionally NOT implemented
+- macOS 14+
+- SwiftUI + Observation
+- Follow HIG and App Store guidelines
+- Accessibility required
 
 ---
 
-## 🧭 Current Phase
+## 5. Comment Rules
 
-Prototype Phase 1
+- Use /// for important APIs
+- Use // MARK: sections
+- Use Korean comments only for non-obvious logic
 
-Focus:
-- Data flow
-- State transitions
-- UI structure (not polish)
+---
+
+## 6. Logging Rules
+
+- No sensitive data logging
+- No API keys
+- Minimal logs only
+
+---
+
+## 7. Commit / PR Rules
+
+- feat / fix / refactor / docs
+- One commit = one purpose
+- PR must include:
+  - what changed
+  - why
+  - what not implemented
+  - test status
+
+---
+
+## 8. Concurrency Rules
+
+- MainActor for UI updates
+- Avoid blocking main thread
+- Support cancellation early
+
+---
+
+## 9. Forbidden Actions
+
+- No file renaming
+- No folder restructuring
+- No new frameworks
+- No business logic in Views
+
+---
+
+## 10. Definition of Done
+
+- Requirements implemented
+- Architecture respected
+- Comments applied
+- Test status reported
+- Accessibility considered
+
+---
+
+## 11. Testing Rules
+
+Command:
+
+    xcodebuild test -scheme DizzyFlow -destination 'platform=macOS'
+
+- Never claim success without execution
+
+---
+
+## 12. Agent Workflow Process (Mandatory)
+
+1. Problem
+2. Proposal
+3. Plan
+4. Execution
+5. Self-check
+6. Testing awareness
+7. Final report
+
+---
+
+## 13. Agent Log Rule
+
+Agent-log required for:
+- architecture changes
+- workflow changes
+
+---
+
+## 14. Absolute Rule
+
+If tests were NOT executed,
+you MUST NOT say they passed.
+
+** All contributors and agents must read AGENT.md before making changes.

@@ -1,21 +1,20 @@
 # DizzyFlow
 
-DizzyFlow is a workflow-first subtitle platform designed for creators using tools like Final Cut Pro.
+A workflow-first subtitle platform for macOS creators.
 
-This is not just a transcription tool.  
-It is a system designed to preserve and accelerate the user's workflow.
+DizzyFlow is designed for professional video editors, especially those working with Final Cut Pro, focusing on preserving workflow continuity rather than exposing AI model complexity.
 
 ---
 
 ## 🚀 Current Status
 
-Early prototype (v0.1)
+Prototype Phase 1
 
 - NavigationSplitView layout
-- WorkflowStore with state transitions
-- SubtitleDocument core model
+- WorkflowStore (state management)
+- SubtitleDocument (core data model)
 - Mock workflow (ready → processing → completed)
-- Read-only inspector panel
+- Read-only inspector
 
 ---
 
@@ -25,20 +24,21 @@ Early prototype (v0.1)
 - Users choose intent, not models
 - Workflow stability over feature expansion
 - All data flows through SubtitleDocument
+- Review is optional
 
 ---
 
-## 🏗 Architecture Overview
+## 🏗 Architecture (Overview)
 
-    Sidebar → User Entry / Navigation
-    Workspace → Main Workflow Area
-    Inspector → Read-only context panel
+Core flow:
 
-Core components:
+    User Intent → WorkflowStore → Engine (future) → SubtitleDocument → UI
 
-- WorkflowStore (state entry point)
-- SubtitleDocument (normalized data model)
-- SwiftUI + Observation (@Observable)
+UI structure:
+
+    Sidebar → navigation
+    Workspace → main interaction
+    Inspector → read-only context
 
 ---
 
@@ -52,23 +52,33 @@ Core components:
 
 ---
 
-## ⚠️ What is NOT included (yet)
+## 📚 Documentation
 
-- Real STT engine
-- File import/export
-- Drag & drop
-- Editing UI
-- External integrations
+- architecture.md → system structure
+- vision.md → product direction
+- AGENT.md → development rules
+- docs/decisions → architecture decisions (ADR)
+- docs/release-checklist.md → release checklist
 
 ---
 
-## 🛣 Roadmap (short)
+## 🛣 Roadmap
 
-- Home workflow entry
 - SubtitleSegment model
-- Result rendering
 - File input pipeline
 - Engine abstraction
+- Editing workflow
+- Final Cut Pro integration
+
+---
+
+## ⚠️ Not Included Yet
+
+- Real STT engine
+- File import/export
+- Editing UI
+- External integrations
+- Persistence
 
 ---
 
