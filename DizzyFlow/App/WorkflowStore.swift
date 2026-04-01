@@ -3,71 +3,109 @@ import Combine
 
 @MainActor
 final class WorkflowStore: ObservableObject {
-
-    @Published var documents: [SubtitleDocument] = [
-        SubtitleDocument(title: "Interview_001"),
-        SubtitleDocument(title: "Podcast_Test"),
-        SubtitleDocument(title: "YouTube_Sample")
-    ]
-
-    @Published var selectedDocument: SubtitleDocument?
-    @Published var currentPhase: WorkflowPhase = .idle
-    @Published var lastUpdated: Date?
+    @Published var documents: [SubtitleDocument]
+    @Published var selectedDocumentID: SubtitleDocument.ID?
 
     private var workflowTask: Task<Void, Never>?
+    private let mockStepDurationNanoseconds: UInt64
+
+    init(
+        documents: [SubtitleDocument]? = nil,
+        mockStepDurationNanoseconds: UInt64 = 1_000_000_000
+    ) {
+        self.documents = documents ?? [
+            SubtitleDocument(title: "Interview_001"),
+            SubtitleDocument(title: "Podcast_Test"),
+            SubtitleDocument(title: "YouTube_Sample")
+        ]
+        self.mockStepDurationNanoseconds = mockStepDurationNanoseconds
+    }
+
+    var selectedDocument: SubtitleDocument? {
+        guard let selectedDocumentID else {
+            return nil
+        }
+
+        return documents.first { $0.id == selectedDocumentID }
+    }
+
+    var currentPhase: WorkflowPhase {
+        selectedDocument?.workflowPhase ?? .idle
+    }
+
+    var lastUpdated: Date? {
+        selectedDocument?.lastUpdated
+    }
 
     func selectDocument(_ document: SubtitleDocument?) {
-        selectedDocument = document
-
-        if document == nil {
-            currentPhase = .idle
-            lastUpdated = nil
-        } else {
-            currentPhase = .ready
-            lastUpdated = Date()
-        }
         workflowTask?.cancel()
+        workflowTask = nil
+        selectedDocumentID = document?.id
+
+        guard let selectedDocumentID else {
+            return
+        }
+
+        updateDocument(id: selectedDocumentID) { document in
+            document.workflowPhase = .ready
+            document.lastUpdated = Date()
+        }
     }
 
     func startMockWorkflow() {
-        guard selectedDocument != nil else {
+        guard let selectedDocumentID else {
             return
         }
 
         workflowTask?.cancel()
         workflowTask = Task { [weak self] in
-            await self?.runMockWorkflow()
+            await self?.runMockWorkflow(for: selectedDocumentID)
         }
     }
 
-    private func runMockWorkflow() async {
-        guard !Task.isCancelled, selectedDocument != nil else { return }
+    private func runMockWorkflow(for documentID: SubtitleDocument.ID) async {
+        guard !Task.isCancelled, selectedDocumentID == documentID else { return }
 
-        currentPhase = .ready
-        lastUpdated = Date()
+        updatePhase(.ready, for: documentID)
 
         do {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
+            try await Task.sleep(nanoseconds: mockStepDurationNanoseconds)
         } catch {
             return
         }
 
-        guard !Task.isCancelled, selectedDocument != nil else { return }
+        guard !Task.isCancelled, selectedDocumentID == documentID else { return }
 
-        currentPhase = .processing
-        lastUpdated = Date()
+        updatePhase(.processing, for: documentID)
 
         do {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
+            try await Task.sleep(nanoseconds: mockStepDurationNanoseconds)
         } catch {
             return
         }
 
-        guard !Task.isCancelled, selectedDocument != nil else { return }
+        guard !Task.isCancelled, selectedDocumentID == documentID else { return }
 
-        currentPhase = .completed
-        lastUpdated = Date()
+        updatePhase(.completed, for: documentID)
         workflowTask = nil
+    }
+
+    private func updatePhase(_ phase: WorkflowPhase, for documentID: SubtitleDocument.ID) {
+        updateDocument(id: documentID) { document in
+            document.workflowPhase = phase
+            document.lastUpdated = Date()
+        }
+    }
+
+    private func updateDocument(
+        id: SubtitleDocument.ID,
+        _ update: (inout SubtitleDocument) -> Void
+    ) {
+        guard let index = documents.firstIndex(where: { $0.id == id }) else {
+            return
+        }
+
+        update(&documents[index])
     }
 }
 

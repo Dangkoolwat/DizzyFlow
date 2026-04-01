@@ -124,7 +124,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				CB05B5BF2F7BCE8B0023848D /* DizzyFlow */,
-				CBC807562F7BE67F00E81968 /* docs */,
 			);
 			name = DizzyFlow;
 			packageProductDependencies = (
