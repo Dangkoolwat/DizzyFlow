@@ -36,11 +36,12 @@ Core pieces:
 
 ## Documentation
 
-- [docs/vision.md](/Users/sanghyoukjin/XcodeProjects/DizzyFlow/docs/vision.md): product direction
-- [docs/workflow.md](/Users/sanghyoukjin/XcodeProjects/DizzyFlow/docs/workflow.md): workflow states and transitions
-- [docs/architecture.md](/Users/sanghyoukjin/XcodeProjects/DizzyFlow/docs/architecture.md): app structure and data flow
-- [docs/release_checklist.md](/Users/sanghyoukjin/XcodeProjects/DizzyFlow/docs/release_checklist.md): release readiness checklist
-- [AGENT.md](/Users/sanghyoukjin/XcodeProjects/DizzyFlow/AGENT.md): repository-specific working rules
+- [Vision](docs/vision.md): product direction
+- [Workflow](docs/workflow.md): workflow states and transitions
+- [Architecture](docs/architecture.md): app structure and data flow
+- [Release Checklist](docs/release_checklist.md): release readiness checklist
+- [Agent Rules](AGENT.md): repository-specific working rules
+
 
 ## Not Implemented Yet
 

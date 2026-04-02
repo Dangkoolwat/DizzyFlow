@@ -136,3 +136,46 @@ If tests were NOT executed,
 you MUST NOT say they passed.
 
 ** All contributors and agents must read AGENT.md before making changes.
+
+
+## 15. Language Rules
+
+- Agent-facing primary documents must be written in English.
+- Keep agent-facing instructions concise to reduce token overhead.
+- Repository-wide guidance documents should use English unless there is a clear team-specific reason not to.
+- Code comments and developer explanations for team sharing should be written in Korean when explanation is needed.
+- History notes and documents created under `agent-log/` must use Korean for body content.
+- English titles are allowed for documents, sections, and log entries.
+
+---
+
+## 16. Documentation Rules
+
+- `README.md`, `AGENT.md`, and major architecture/workflow/product documents should be maintained in English.
+- Documents mainly created for team communication, change history, or implementation notes may use Korean body content.
+- If an agent creates a new history or review note, place it under `agent-log/` unless another repository rule already defines a different location.
+- Files created under `agent-log/` may use English filenames, but the main body content must be written in Korean.
+
+---
+
+## 17. Commit Message Rules
+
+- Commit type prefixes must remain in English.
+- Commit message subject should be written in Korean.
+- Commit message body, when needed, should also be written in Korean.
+- Do not write commit messages fully in English except for the type prefix.
+
+Preferred prefixes:
+- `feat`
+- `fix`
+- `refactor`
+- `docs`
+- `test`
+- `chore`
+
+Examples:
+- `feat: 문서 구조 정리 및 README 링크 수정`
+- `fix: 선택 상태 변경 시 워크플로우 단계 갱신 오류 수정`
+- `docs: architecture 문서를 현재 구현 상태에 맞게 동기화`
+
+
