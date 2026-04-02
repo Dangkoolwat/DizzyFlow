@@ -124,9 +124,14 @@ Command:
 
 ## 13. Agent Log Rule
 
-Agent-log required for:
+Agent-log is required for:
 - architecture changes
 - workflow changes
+
+Log files should be created under `agent-log/` unless another repository rule defines a different location.
+Use Korean for body content.
+English titles and filenames are allowed.
+
 
 ---
 
@@ -179,3 +184,4 @@ Examples:
 - `docs: architecture 문서를 현재 구현 상태에 맞게 동기화`
 
 
+**All contributors and agents must read AGENT.md before making changes.**
