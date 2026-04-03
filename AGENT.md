@@ -3,6 +3,7 @@
 ## Changelog
 | Date | Contributor | Summary |
 | --- | --- | --- |
+| 2026-04-03 | ChatGPT + Sanghyouk Jin | Added workflow UX guidance and aligned documentation priority with `docs/workflow-ux-rules.md` |
 | 2026-04-02 | ChatGPT | Clarified and expanded repository rules for cross-agent consistency |
 
 ---
@@ -17,7 +18,7 @@ Your job is to:
 - avoid over-engineering
 - keep code, documentation, and workflow rules in sync
 
-Do not optimize for novelty.
+Do not optimize for novelty.  
 Optimize for correctness, consistency, and maintainability.
 
 ---
@@ -46,7 +47,7 @@ Important:
 - Domain models must remain UI-independent.
 - `SubtitleDocument` is the core workflow model unless the user explicitly changes that direction.
 
-If a task appears to violate these rules, do not silently proceed.
+If a task appears to violate these rules, do not silently proceed.  
 State the architectural risk clearly before implementation.
 
 ---
@@ -109,6 +110,7 @@ The following should normally be maintained in English:
 - `AGENT.md`
 - `docs/vision.md`
 - `docs/workflow.md`
+- `docs/workflow-ux-rules.md`
 - `docs/architecture.md`
 - other major shared guidance documents
 
@@ -129,7 +131,29 @@ Use Korean body content for:
 
 ---
 
-## 8. Agent Log Rules
+## 8. Workflow UX Guidance
+
+Before implementing workflow- or UI-related changes, review `docs/workflow-ux-rules.md` first.
+
+Use that document as the default reference for:
+- Sidebar behavior
+- Preview behavior
+- Inspector behavior
+- Retry policy
+- Delete policy
+- Version creation policy
+- Home and Processing workflow expectations
+
+When workflow understanding changes:
+- update the relevant code
+- update `docs/workflow-ux-rules.md`
+- update any other affected shared guidance documents when needed
+
+Do not change shared workflow behavior in code while leaving the repository guidance documents outdated.
+
+---
+
+## 9. Agent Log Rules
 
 Agent logs are required for:
 - architecture changes
@@ -139,12 +163,12 @@ Agent logs are required for:
 - tasks the user may want to review later
 
 ### Purpose
-Agent logs are historical task records.
+Agent logs are historical task records.  
 They are not policy documents.
 
 ### Location
 Use:
-- `agent-log/YYYY-MM-DD-task-name/`
+- `agent-log/YYYY-MM-DD-task-name-agent-name/`
 
 ### Language
 - Body content must be written in Korean.
@@ -163,7 +187,7 @@ Do not create unnecessary log files for trivial work.
 
 ---
 
-## 9. Comment Rules
+## 10. Comment Rules
 
 - Use `///` for important APIs.
 - Use `// MARK:` sections where helpful.
@@ -173,7 +197,7 @@ Do not create unnecessary log files for trivial work.
 
 ---
 
-## 10. Logging Rules
+## 11. Logging Rules
 
 - Do not log sensitive data.
 - Do not log secrets, tokens, or keys.
@@ -182,7 +206,7 @@ Do not create unnecessary log files for trivial work.
 
 ---
 
-## 11. Commit and PR Rules
+## 12. Commit and PR Rules
 
 ### Commit message rules
 - Commit type prefixes must remain in English.
@@ -217,7 +241,7 @@ A PR summary should include:
 
 ---
 
-## 12. Testing Rules
+## 13. Testing Rules
 
 Default command:
 
@@ -231,7 +255,7 @@ Rules:
 
 ---
 
-## 13. Workflow Process
+## 14. Workflow Process
 
 Use this process for non-trivial tasks:
 
@@ -245,12 +269,12 @@ Use this process for non-trivial tasks:
 
 For trivial tasks, a shorter flow is acceptable.
 
-Do not ask vague open-ended questions when the task is clear.
+Do not ask vague open-ended questions when the task is clear.  
 When the task is ambiguous and important, propose a clear default direction before asking for confirmation.
 
 ---
 
-## 14. Critical Change Rule
+## 15. Critical Change Rule
 
 Treat the following as critical changes:
 - persistence model changes
@@ -269,7 +293,7 @@ For critical changes:
 
 ---
 
-## 15. Consistency Sweep Rule
+## 16. Consistency Sweep Rule
 
 If a task changes any shared name, enum, model field, storage key, config key, protocol, or common interface, the agent must:
 
@@ -283,7 +307,7 @@ Partial migration is not acceptable for shared patterns.
 
 ---
 
-## 16. Knowledge Reuse Rule
+## 17. Knowledge Reuse Rule
 
 Before creating a new reusable knowledge document:
 - search existing documents first
@@ -294,7 +318,7 @@ If a future `docs/knowledge/` folder is introduced, use it for reusable lessons 
 
 ---
 
-## 17. Forbidden Actions
+## 18. Forbidden Actions
 
 - No silent file renaming
 - No silent folder restructuring
@@ -305,7 +329,7 @@ If a future `docs/knowledge/` folder is introduced, use it for reusable lessons 
 
 ---
 
-## 18. Definition of Done
+## 19. Definition of Done
 
 Work is done only when all relevant items below are satisfied:
 
@@ -319,7 +343,7 @@ Work is done only when all relevant items below are satisfied:
 
 ---
 
-## 19. Absolute Rule
+## 20. Absolute Rule
 
 If tests were NOT executed, you MUST NOT say they passed.
 

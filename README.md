@@ -41,6 +41,7 @@ Core pieces:
 - [Architecture](docs/architecture.md): app structure and data flow
 - [Release Checklist](docs/release_checklist.md): release readiness checklist
 - [Agent Rules](AGENT.md): repository-specific working rules
+- [Workflow UX Rules](docs/workflow-ux-rules.md): Current detailed Workflow / UX rules document used as the reference for mockup implementation.
 
 
 ## Not Implemented Yet
