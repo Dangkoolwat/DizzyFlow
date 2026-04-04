@@ -31,7 +31,11 @@ struct ContentView: View {
                 }
             }
             .toolbar {
-                ToolbarItem {
+                ToolbarItem(placement: .principal) {
+                    SettingsBarView(store: store)
+                }
+
+                ToolbarItem(placement: .primaryAction) {
                     Button {
                         showsInspector.toggle()
                     } label: {
@@ -84,13 +88,31 @@ struct ContentView: View {
                     }
                 }
             }
-
-            // Settings (최하단)
-            Section {
-                Label("Settings", systemImage: "gear")
-                    .tag(SidebarDestination.settings)
-            }
+            // Settings moved to safeAreaInset
         }
+        .safeAreaInset(edge: .bottom) {
+            Button {
+                sidebarSelection = .settings
+            } label: {
+                HStack {
+                    Label("Settings", systemImage: "gear")
+                        .padding(.horizontal, 4)
+                        .foregroundStyle(sidebarSelection == .settings ? Color.accentColor : Color.primary)
+                    Spacer()
+                }
+                .padding(.vertical, 6)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(sidebarSelection == .settings ? Color.accentColor.opacity(0.15) : Color.clear)
+                    .padding(.horizontal, 8)
+            )
+        }
+        .navigationSplitViewColumnWidth(min: 220, ideal: 240, max: 300)
         .navigationTitle("DizzyFlow")
         .disabled(store.isProcessing)
         .opacity(store.isProcessing ? 0.5 : 1.0)
