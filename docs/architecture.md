@@ -2,93 +2,95 @@
 
 ## Overview
 
-DizzyFlow is currently a SwiftUI prototype organized around a single shared store.
-The app validates a workflow-first interaction model before adding persistence, media import, or engine integration.
+DizzyFlow is a macOS SwiftUI application built around a 6-phase workflow state machine for subtitle generation.
+The app follows a "Workflow-first" philosophy with a 3-panel UI (Sidebar + Workspace + Inspector).
 
 ## Runtime Structure
 
-The current runtime path is:
-
-`DizzyFlowApp` -> `WorkflowStore` -> `ContentView` -> section-specific UI
+`DizzyFlowApp` → `WorkflowStore` → `ContentView` → destination-specific views
 
 - `DizzyFlowApp` creates one `WorkflowStore` for the app session.
-- `WorkflowStore` owns document selection, workflow phase, and update timestamps.
-- `ContentView` renders UI from store state and sends user actions back into the store.
+- `WorkflowStore` owns the document list, selection, settings, workflow phase, and processing task.
+- `ContentView` renders UI from store state and dispatches user actions back into the store.
 
 ## Layers
 
 ### App
 
 - `DizzyFlowApp` is the application entry point.
-- App-level dependency setup currently happens inline at launch.
+- Creates and owns the shared `WorkflowStore`.
 
 ### Domain
 
-- `SubtitleDocument` is the only domain model implemented today.
-- It stores lightweight metadata for a subtitle work item: identity, title, and creation date.
+- `SubtitleDocument` — the primary workflow item (title, phase, settings snapshot, segments, failure info).
+- `SubtitleSegment` — individual subtitle unit with index, timecodes, and text content.
 
 ### State
 
-- `WorkflowStore` is the central state container.
-- It exposes seeded documents and the selected document identifier.
-- Selected document state such as workflow phase and last update time is derived from the document itself.
-- It also owns the mock async workflow task.
+- `WorkflowStore` is the single source of truth.
+- Owns `documents: [SubtitleDocument]`, `selectedDocumentID`, and workflow settings (`selectedFPS`, `selectedLanguage`, `selectedTemplate`, `selectedModel`).
+- `WorkflowPhase` (6 states): `idle` → `ready` → `processing` → `completed` | `failed` | `cancelled`.
+- `ProcessingStep` (5 stages): `audioAnalysis` → `vadAnalysis` → `transcription` → `srtGeneration` → `fcpxmlGeneration`.
+- State transitions: `startProcessing()`, `cancelProcessing()`, `restartProcessing()`, `startNewWorkflow()`.
 
 ### Features
 
-- `ContentView` contains the whole prototype UI.
-- The view is split into three visible areas:
-  - Sidebar for section selection
-  - Workspace for the active section
-  - Inspector for read-only context
+- `ContentView` — main 3-panel layout with flat sidebar.
+- `SidebarDestination` — selection model for Home, Document(UUID), and Settings.
+- Phase-specific workspace views:
+  - `HomeWorkspaceView` — Idle/Ready (file drop, settings bar, start button)
+  - `ProcessingWorkspaceView` — Safe Lock with progress bar, cumulative scroll results, cancel button
+  - `CompletedWorkspaceView` — SRT preview, FCPXML/SRT download, new workflow
+  - `FailedWorkspaceView` — failure info, new workflow
+  - `CancelledWorkspaceView` — cancel info, restart/new workflow
+- `DocumentDetailView` — phase-based routing container (no internal list)
+- `SettingsBarView` — top bar showing settings in Idle/Ready, processing messages otherwise
+- `SegmentCardView` — individual subtitle segment card with highlight
+- `InspectorPanelView` — contextual read-only information and Tips! cards
 
 ## Data Flow
 
-The current data flow is:
-
-1. The app launches and creates a single `WorkflowStore`.
-2. `ContentView` reads observable store state.
-3. The user selects a section in the sidebar.
-4. In the Documents section, the user selects a `SubtitleDocument`.
-5. `WorkflowStore` updates the selected document and mutates document-scoped workflow state.
-6. The user starts the mock workflow.
-7. `WorkflowStore` runs an async task and advances the phase from `ready` to `processing` to `completed`.
-8. The workspace and inspector re-render from the updated store state.
+1. The app launches; `WorkflowStore` starts with no documents.
+2. User navigates to Home, adjusts settings, drops/selects a media file.
+3. User presses "시작하기" — `WorkflowStore.startProcessing()`:
+   - Creates `SubtitleDocument` with settings snapshot.
+   - Inserts at top of `documents` array.
+   - Sets `selectedDocumentID` → sidebar auto-navigates to new document.
+   - Starts async mock workflow task.
+4. During Processing: Safe Lock dims sidebar. Segments accumulate in real-time.
+5. On completion/failure/cancel: document phase updates; user can download, restart, or start new.
+6. User can switch to completed documents from the sidebar at any time.
 
 ## UI Composition
 
-### Sidebar
+### Sidebar (Flat Structure)
 
-- Uses `SidebarSection` for top-level navigation.
-- Current sections are `Home`, `Documents`, and `Recent`.
+- `Home` — fixed at top.
+- `Documents` — `WorkflowStore.documents` listed directly (title + phase badge).
+- `Settings` — fixed at bottom (placeholder).
+- Safe Lock: entire sidebar disabled + dimmed during Processing.
 
 ### Workspace
 
-- `Home` is a landing screen for future media import.
-- `Documents` is the active prototype flow and contains:
-  - a document list
-  - a detail panel
-  - a trigger for the mock workflow
-- `Recent` is currently a placeholder view.
+- Routes via `SidebarDestination` in `ContentView`.
+- Each phase has a dedicated view per UX docs.
 
 ### Inspector
 
-- The inspector is read-only.
-- It shows section-specific summary information.
-- In the Documents section, it reflects the selected document, workflow phase, creation time, and last update time.
+- Destination-aware (Home / Document / Settings).
+- Document inspector is further phase-aware (Idle, Processing, Completed, Failed, Cancelled).
+- Shows metadata, settings snapshot, processing step list, Tips! cards.
 
 ## Current Constraints
 
 - Workflow execution is a mock task with fixed delays.
-- There is no engine abstraction in code yet.
-- There is no import, export, editing, or persistence layer.
-- `ContentView` is currently large and mixes multiple feature surfaces in one file.
+- No engine abstraction, import/export, or persistence layer.
+- Settings screen is a placeholder.
+- File drop captures filename only (no actual media processing).
 
 ## Intended Direction
 
-The current shape suggests a likely next architecture:
-
-- keep `SubtitleDocument` as the canonical workflow item
-- split `ContentView` into smaller feature views
-- introduce engine and file pipeline boundaries behind the store
-- preserve the read-only inspector pattern while expanding workspace actions
+- Integrate real engine (Sherpa-onnx / WhisperKit) behind the store.
+- Add persistence layer for documents.
+- Implement Settings screen (General, VAD, Preprocessor, Models, About).
+- Add file export (SRT, FCPXML) functionality.

@@ -1,8 +1,17 @@
 import SwiftUI
 
+/// 메인 앱 레이아웃 — 플랫 사이드바 + Workspace + Inspector (3패널)
+///
+/// 사이드바 구조:
+///   - Home (최상단, 고정)
+///   - Documents (WorkflowStore.documents 직접 나열)
+///   - Settings (최하단, 고정)
+///
+/// Safe Lock:
+///   Processing 중 사이드바와 Inspector의 인터랙션을 차단한다.
 struct ContentView: View {
     @ObservedObject var store: WorkflowStore
-    @State private var selectedSection: SidebarSection = .home
+    @State private var sidebarSelection: SidebarDestination? = .home
     @State private var showsInspector: Bool = true
 
     var body: some View {
@@ -26,45 +35,162 @@ struct ContentView: View {
                     Button {
                         showsInspector.toggle()
                     } label: {
-                        Image(systemName: showsInspector ? "sidebar.right" : "sidebar.right")
+                        Image(systemName: "sidebar.right")
                     }
                     .help(showsInspector ? "Hide Inspector" : "Show Inspector")
                 }
             }
         }
         .frame(minWidth: 1000, minHeight: 640)
+        // Document 선택 동기화: Store → Sidebar
+        .onChange(of: store.selectedDocumentID) { _, newID in
+            if let newID {
+                sidebarSelection = .document(newID)
+            }
+        }
+        // Sidebar 선택 → Store 동기화
+        .onChange(of: sidebarSelection) { _, newValue in
+            switch newValue {
+            case .document(let id):
+                if store.selectedDocumentID != id {
+                    store.selectDocument(store.documents.first { $0.id == id })
+                }
+            case .home, .settings, .none:
+                if store.selectedDocumentID != nil {
+                    store.selectDocument(nil)
+                }
+            }
+        }
     }
 
+    // MARK: - Sidebar (플랫 구조)
+
     private var sidebar: some View {
-        List(selection: $selectedSection) {
-            ForEach(SidebarSection.allCases) { section in
-                Label(section.title, systemImage: section.systemImage)
-                    .tag(section)
+        List(selection: $sidebarSelection) {
+            // Home (최상단)
+            Label("Home", systemImage: "house")
+                .tag(SidebarDestination.home)
+
+            // Documents (직접 나열)
+            Section("Documents") {
+                if store.documents.isEmpty {
+                    Text("아직 작업이 없습니다")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                } else {
+                    ForEach(store.documents) { document in
+                        documentRow(for: document)
+                            .tag(SidebarDestination.document(document.id))
+                    }
+                }
+            }
+
+            // Settings (최하단)
+            Section {
+                Label("Settings", systemImage: "gear")
+                    .tag(SidebarDestination.settings)
             }
         }
         .navigationTitle("DizzyFlow")
+        .disabled(store.isProcessing)
+        .opacity(store.isProcessing ? 0.5 : 1.0)
     }
 
-    private var mainWorkspace: some View {
-        Group {
-            switch selectedSection {
-            case .home:
-                HomeWorkspaceView()
+    /// 사이드바 문서 행 — 제목 + 상태 배지
+    private func documentRow(for document: SubtitleDocument) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(document.title)
+                    .lineLimit(1)
 
-            case .documents:
-                DocumentsWorkspaceView(store: store)
-
-            case .recent:
-                PlaceholderWorkspaceView(
-                    title: "Recent Workflows",
-                    message: "Recent workflows will appear here."
-                )
+                if let fileName = document.inputFileName {
+                    Text(fileName)
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                        .lineLimit(1)
+                }
             }
+
+            Spacer()
+
+            phaseBadge(for: document.workflowPhase)
         }
     }
 
+    @ViewBuilder
+    private func phaseBadge(for phase: WorkflowPhase) -> some View {
+        switch phase {
+        case .idle:
+            EmptyView()
+        case .ready:
+            Image(systemName: "checkmark.circle")
+                .foregroundStyle(.blue)
+                .font(.caption)
+        case .processing:
+            ProgressView()
+                .controlSize(.mini)
+        case .completed:
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(.green)
+                .font(.caption)
+        case .failed:
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.red)
+                .font(.caption)
+        case .cancelled:
+            Image(systemName: "xmark.circle.fill")
+                .foregroundStyle(.orange)
+                .font(.caption)
+        }
+    }
+
+    // MARK: - Main Workspace (선택 기반 라우팅)
+
+    @ViewBuilder
+    private var mainWorkspace: some View {
+        switch sidebarSelection {
+        case .home, .none:
+            HomeWorkspaceView(store: store)
+
+        case .document:
+            DocumentDetailView(store: store)
+
+        case .settings:
+            SettingsPlaceholderView()
+        }
+    }
+
+    // MARK: - Inspector
+
     private var inspectorPanel: some View {
-        InspectorPanelView(selectedSection: selectedSection, store: store)
+        InspectorPanelView(
+            destination: sidebarSelection ?? .home,
+            store: store
+        )
+    }
+}
+
+// MARK: - Settings Placeholder (Phase 4에서 구현)
+
+private struct SettingsPlaceholderView: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            Spacer()
+
+            Image(systemName: "gear")
+                .font(.system(size: 48))
+                .foregroundStyle(.secondary)
+
+            Text("Settings")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+
+            Text("설정 화면은 다음 단계에서 구현됩니다.")
+                .foregroundStyle(.secondary)
+
+            Spacer()
+        }
+        .padding(40)
     }
 }
 
