@@ -5,7 +5,7 @@ struct SettingsBarView: View {
     @ObservedObject var store: WorkflowStore
 
     var body: some View {
-        Group {
+        HStack(spacing: 16) {
             if store.isProcessing {
                 processingMessageBar
             } else if store.currentPhase == .completed {
@@ -30,15 +30,12 @@ struct SettingsBarView: View {
                 settingsEditBar
             }
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
-        .background(.ultraThinMaterial)
     }
 
     // MARK: - Settings Edit Bar (Idle / Ready)
 
     private var settingsEditBar: some View {
-        HStack(spacing: 20) {
+        HStack(spacing: 16) {
             settingPicker(
                 title: "FPS",
                 selection: $store.selectedFPS,
@@ -62,8 +59,6 @@ struct SettingsBarView: View {
                 selection: $store.selectedModel,
                 options: ["Sherpa-onnx", "WhisperKit"]
             )
-
-            Spacer()
         }
     }
 
@@ -72,20 +67,20 @@ struct SettingsBarView: View {
         selection: Binding<String>,
         options: [String]
     ) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(title)
-                .font(.caption2)
-                .foregroundStyle(.secondary)
-
+        Menu {
             Picker(title, selection: selection) {
                 ForEach(options, id: \.self) { option in
                     Text(option).tag(option)
                 }
             }
             .labelsHidden()
-            .pickerStyle(.menu)
-            .fixedSize()
+            .pickerStyle(.inline) // 하위 메뉴가 아닌 바로 펼쳐지는 리스트로 렌더링
+        } label: {
+            Text("\(title): \(selection.wrappedValue)")
+                .font(.subheadline)
         }
+        .menuStyle(.borderlessButton)
+        .fixedSize()
     }
 
     // MARK: - Processing Message Bar

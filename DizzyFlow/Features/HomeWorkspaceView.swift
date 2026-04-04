@@ -14,11 +14,6 @@ struct HomeWorkspaceView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // 상단 설정 바
-            SettingsBarView(store: store)
-
-            Divider()
-
             // 메인 콘텐츠
             if store.pendingFile != nil {
                 readyContent
