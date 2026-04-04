@@ -1,4 +1,3 @@
-
 # DizzyFlow Agent Instructions
 
 This document defines how AI agents should work on this project.
@@ -9,7 +8,7 @@ This document defines how AI agents should work on this project.
 | Date | Contributor | Summary |
 | --- | --- | --- |
 | 2026-04-01 | Sanghyouk Jin | Expanded README/AGENT with Apple-focused Korean comments, testing, App Store readiness, and agent guidance |
-| 2026-04-04 | Sanghyouk Jin / OpenAI ChatGPT | Updated UX/UI reference doc paths, Settings structure, and current scope vs 2.0 boundaries |
+| 2026-04-04 | Sanghyouk Jin / OpenAI ChatGPT | Updated UX/UI reference doc paths, Settings structure, current scope vs 2.0 boundaries, and WorkflowPhase alignment direction |
 
 ---
 
@@ -162,6 +161,8 @@ The current prototype includes:
     - About & License
 - Model compatibility UX
 - Inspector Tips guidance
+- Processing visual progress rules
+- Preprocessor option structure
 
 The current prototype does NOT include:
 
@@ -190,6 +191,7 @@ These excluded items are considered 2.0 scope unless explicitly re-opened.
 - Most interactions are blocked.
 - Job Cancel remains available.
 - The real-time result view should support cumulative scrolling.
+- The currently active segment may be visually highlighted to indicate live progress.
 - The top area changes from settings UI to message/status UI.
 
 ### Terminal States
@@ -205,6 +207,10 @@ These excluded items are considered 2.0 scope unless explicitly re-opened.
 - Settings keeps the app’s 3-panel grammar.
 - Inspector should provide read-only Tips!-style guidance.
 - Preprocessor has an explicit enable/disable control.
+- Preprocessor options include:
+    - Audio Normalization
+    - Noise Reduction
+    - Channel Mixdown
 - Models use card-based actions.
 - WhisperKit must be dimmed and disabled on Intel Macs.
 
@@ -247,3 +253,5 @@ Focus:
 - workflow UX structure
 - settings UX structure
 - mock-based end-to-end prototype
+- documentation and code phase alignment
+

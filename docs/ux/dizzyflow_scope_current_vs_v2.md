@@ -18,6 +18,7 @@ Last updated: 2026-04-04
     Safe Lock 전략
     WhisperKit의 Intel Mac 비활성화 규칙
     Inspector의 Tips! 형식 가이드
+    WorkflowPhase 6단계 표준 방향
 
 즉 이번 문서는
 현재 실제로 프로토타입에 반영 가능한 범위와
@@ -74,6 +75,7 @@ Document의 고급 버전 관리 기능도 2.0에서 별도 논의한다.
     UI/UX 흐름을 고정하는 데 필요한 것
     에이전트가 오해 없이 구현하기 위한 역할/상태 정의
     Settings / Workflow / Safe Lock 기준
+    WorkflowPhase의 6단계 정렬 방향
 
 ### 제외할 것
 
@@ -101,6 +103,10 @@ AI 편집(GEM4)와 버전 관리는
     이 기능은 차기 버전(2.0)에서 별도 논의 및 설계를 진행한다.
     현재 프로토타입 범위에는 포함하지 않는다.
 
+저신뢰 구간 시각 가이드 역시
+현재 버전에서는 방향성 수준으로만 정리하고,
+구체 구현은 추후 confidence 기준과 함께 다시 논의한다.
+
 ---
 
 ## 5. 실무적 의미
@@ -127,11 +133,12 @@ AI 편집과 버전 관리는 다음 단계에서 깊게 다루는 것이 맞다
     models / preprocessor / VAD / general
     safe lock
     inspector tips
+    WorkflowPhase 6단계 방향 정리
+    processing 하이라이트 규칙
+    preprocessor 옵션 구체화
 
 2.0:
     AI 편집 (GEM4)
     고급 버전 관리
 
 이 기준으로 전체 문서를 업데이트한다.
-
-

@@ -1,4 +1,6 @@
+
 # DizzyFlow UX Flow Notes
+
 ## Idle and Ready
 Last updated: 2026-04-04
 
@@ -275,3 +277,4 @@ Ready 단계는 중앙에 과도한 메타정보를 쌓는 화면이 아니다.
     재실행 규칙
     기존 문서 선택 시 설정 변경의 의미
     Document / Version / Job 관계 정의
+

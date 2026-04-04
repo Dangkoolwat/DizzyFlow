@@ -265,6 +265,21 @@ Preprocessor는 외부 프로그램(ffmpeg)을 실행하기 때문에
     Noise Reduction
     Channel Mixdown
 
+세부 동작 기준:
+
+    Audio Normalization
+    - Toggle
+    - 들쭉날쭉한 볼륨을 일정하게 맞춤
+
+    Noise Reduction
+    - Dropdown
+    - Off / Low / High
+    - 배경 소음 제거 강도 선택
+
+    Channel Mixdown
+    - Toggle
+    - 스테레오 오디오를 모노로 병합하여 처리 속도 향상
+
 이 옵션들은 사용자가 이해 가능한 품질 개선 기능만 노출한다.
 
 ### 8.4 내부 자동 처리와의 구분
@@ -510,6 +525,7 @@ Settings 화면이 갱신된다.
 
 ### Preprocessor
 - Tips! 전처리기를 켜면 더 안정적인 전사 결과를 얻을 수 있지만 처리 시간은 늘어날 수 있습니다.
+- Tips! Noise Reduction은 배경 소음이 많은 환경에서 도움이 될 수 있습니다.
 - Tips! 전처리기를 끄더라도 엔진 입력에 필요한 최소 변환은 내부적으로 처리될 수 있습니다.
 
 ### Models
@@ -553,10 +569,11 @@ Settings 화면이 갱신된다.
     6. General에는 완료 작업 자동 삭제 기능이 포함된다
     7. VAD는 드롭다운 기반 세부 음성 감지 설정을 제공한다
     8. Preprocessor는 ffmpeg 기반 전처리 설정이며 전체 사용 여부 토글이 있다
-    9. Models는 카드 기반 모델 자산 관리 화면이다
-    10. WhisperKit은 Intel Mac에서 전체 Dim 처리 및 비활성화된다
-    11. Settings의 무거운 작업에는 Safe Lock 규칙을 적용할 수 있다
-    12. 저장 버튼은 General / VAD / Preprocessor에만 둔다
+    9. Preprocessor 세부 옵션은 Audio Normalization / Noise Reduction / Channel Mixdown을 포함한다
+    10. Models는 카드 기반 모델 자산 관리 화면이다
+    11. WhisperKit은 Intel Mac에서 전체 Dim 처리 및 비활성화된다
+    12. Settings의 무거운 작업에는 Safe Lock 규칙을 적용할 수 있다
+    13. 저장 버튼은 General / VAD / Preprocessor에만 둔다
 
 ---
 
