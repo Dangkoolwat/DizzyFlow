@@ -3,38 +3,30 @@ import SwiftUI
 /// 하단 2층 구조 컨테이너 — 모든 워크스페이스 뷰 공용.
 ///
 /// 구조:
-///   - 1층 (Status Layer): 설정 피커 또는 상태 메시지 — 라운딩 카드
-///   - 2층 (Action Bar): 캡슐형 액션 버튼 세트 — 라운딩 카드
+///   - 1층 (Status Layer): 설정 피커 또는 상태 메시지
+///   - 2층 (Action Bar): 캡슐형 액션 버튼 세트
 ///
-/// 카드 배경은 `Color.black.opacity()`로 미세한 어둡기 차이만 주어
-/// macOS 14/15, 라이트/다크 모두에서 자연스럽게 녹아드는 구분감을 제공한다.
+/// 상단 모서리를 라운딩한 컨테이너 배경(`Color.black.opacity(0.05)`)으로
+/// 중앙 콘텐츠 영역과의 시각적 구분을 제공한다.
 struct BottomControlStack<StatusContent: View, ActionContent: View>: View {
     @ViewBuilder let statusContent: () -> StatusContent
     @ViewBuilder let actionContent: () -> ActionContent
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 12) {
             // --- 1층: 설정 또는 상태 메시지 ---
             statusContent()
                 .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.black.opacity(0.03))
-                )
 
             // --- 2층: 액션 바 ---
             actionContent()
                 .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.black.opacity(0.05))
-                )
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 8)
         .padding(.vertical, 16)
-        .overlay(alignment: .top) { Divider() }
+        .frame(maxWidth: .infinity)
+        .background(Color.black.opacity(0.05))
+        .clipShape(UnevenRoundedRectangle(topLeadingRadius: 12, topTrailingRadius: 12))
     }
 }
 

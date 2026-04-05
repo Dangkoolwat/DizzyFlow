@@ -159,20 +159,11 @@ struct HomeWorkspaceView: View {
         selection: Binding<String>,
         options: [String]
     ) -> some View {
-        Menu {
-            Picker(title, selection: selection) {
-                ForEach(options, id: \.self) { option in
-                    Text(option).tag(option)
-                }
-            }
-            .labelsHidden()
-            .pickerStyle(.inline)
-        } label: {
-            Text("\(title): \(selection.wrappedValue)")
-                .font(.subheadline)
-        }
-        .menuStyle(.borderlessButton)
-        .menuOrder(.fixed) // 하단 위치 → 위 방향 팝업 시 항목 순서 유지
+        UpwardMenuPicker(
+            title: title,
+            selection: selection,
+            options: options
+        )
         .fixedSize()
     }
 
