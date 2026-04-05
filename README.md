@@ -2,10 +2,11 @@
 
 ## Revision History
 
-| Date       | Contributor                    | Summary                                                                                                 |
-| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| 2026-04-01 | Sanghyouk Jin                  | Expanded README/AGENT with Apple-focused standards, testing, App Store readiness, and agent guidance    |
-| 2026-04-04 | Sanghyouk Jin / OpenAI ChatGPT | Updated UX/UI documentation paths, Settings structure, current vs v2 scope, and WorkflowPhase direction |
+| Date       | Contributor                    | Summary                                                                                                      |
+| ---------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| 2026-04-01 | Sanghyouk Jin                  | Expanded README/AGENT with Apple-focused standards, testing, App Store readiness, and agent guidance         |
+| 2026-04-04 | Sanghyouk Jin / OpenAI ChatGPT | Updated UX/UI documentation paths, Settings structure, current vs v2 scope, and WorkflowPhase direction      |
+| 2026-04-05 | Sanghyouk Jin / OpenAI ChatGPT | Updated README to reflect footer-first workflow structure, current docs/ux paths, Inspector exception rules, and processing lock behavior |
 
 ---
 
@@ -13,7 +14,7 @@
 
 DizzyFlow is a workflow-first subtitle platform designed for creators using tools like Final Cut Pro.
 
-This is not just a transcription tool.
+This is not just a transcription tool.  
 It is a system designed to preserve and accelerate the user’s workflow.
 
 ---
@@ -27,22 +28,21 @@ Early prototype (v0.1)
 * SubtitleDocument core model
 * Mock workflow implementation
 * Read-only Inspector panel
-* Settings UX structure defined
-* Model management UX defined
+* Footer-first interaction structure
+* BottomControlStack-based workflow controls
+* Settings UX direction defined
 * Processing and Terminal States UX defined
 
 ### Standard Workflow Phases
 
 The project defines a 6-phase workflow model:
 
-```
-Idle
-Ready
-Processing
-Completed
-Failed
-Cancelled
-```
+    Idle
+    Ready
+    Processing
+    Completed
+    Failed
+    Cancelled
 
 The goal is to align the code-level `WorkflowPhase` with this standardized structure.
 
@@ -61,30 +61,27 @@ The goal is to align the code-level `WorkflowPhase` with this standardized struc
 
 ## 🏗 Architecture Overview
 
-```
-Sidebar → Entry point / navigation  
-Workspace → Main workflow area  
-Inspector → Read-only contextual guidance panel  
-```
+    Sidebar → Entry point / navigation
+    Workspace → Main workflow area
+    Inspector → Read-only contextual guidance panel
 
 Core components:
 
 * WorkflowStore (entry point of state transitions)
 * SubtitleDocument (normalized data model)
-* SwiftUI + Observation (@Observable)
+* SwiftUI + Observation (`@Observable`)
+* BottomControlStack (footer-based workflow controls)
 
 ---
 
 ## 📁 Project Structure
 
-```
-App
-Domain
-Features
-Infrastructure
-Shared
-docs/ux
-```
+    App
+    Domain
+    Features
+    Infrastructure
+    Shared
+    docs/ux
 
 ---
 
@@ -92,20 +89,49 @@ docs/ux
 
 The following documents define the current UX/UI standards for the DizzyFlow prototype:
 
-```
-docs/ux/dizzyflow_ux_idle_ready.md
-docs/ux/dizzyflow_ux_processing_terminal_states.md
-docs/ux/dizzyflow_settings_ux.md
-docs/ux/dizzyflow_scope_current_vs_v2.md
-```
+    docs/ux/dizzyflow_ux_master_guide.md
+    docs/ux/dizzyflow_ui_standard.md
+    docs/ux/dizzyflow_scope_current_vs_v2.md
 
 ### Purpose of these documents
 
-* Define Idle / Ready / Processing / Terminal workflows
+* Define the overall workflow structure from Idle to Terminal states
 * Clarify Sidebar / Workspace / Inspector responsibilities
-* Establish Settings structure and Safe Lock behavior
+* Establish footer-first layout and BottomControlStack rules
 * Separate current prototype scope from future (v2) scope
 * Standardize the 6-phase workflow model
+
+---
+
+## 🧭 Workspace Interaction Model
+
+DizzyFlow uses a footer-first interaction model for primary workflow actions.
+
+Earlier prototypes explored placing settings and status affordances near the upper workspace title area. In practice, macOS 14 and macOS 15 produced noticeably different spacing, density, and titlebar/toolbar behavior, which made the upper workspace region feel inconsistent across OS versions.
+
+To improve visual and interaction consistency, primary workflow controls were moved into the bottom workspace support structure.
+
+### Bottom Workspace Structure
+
+The lower workspace area is composed of two logical layers:
+
+* Support Region  
+  Displays workflow-related options during Idle / Ready, and status-oriented messaging during Processing / Terminal states.
+
+* Action Row  
+  Displays task-driving actions such as upload, start, retry, or cancel.
+
+This preserves a stable visual rhythm across states while keeping workflow progression controls in one predictable place.
+
+### Footer-First Rule
+
+Footer-first does not mean every control must live at the bottom of the window.
+
+Instead, it means:
+
+* Primary workflow actions should be placed in the bottom action area
+* Contextual support content may appear in the support region above that action area
+* Optional auxiliary view controls may remain in the toolbar when appropriate
 
 ---
 
@@ -114,7 +140,7 @@ docs/ux/dizzyflow_scope_current_vs_v2.md
 ### Home / Idle
 
 * Default entry point when launching the app
-* Top settings bar allows pre-configuration
+* Bottom support area allows pre-configuration
 * Sidebar displays existing documents
 * No active processing yet
 
@@ -122,15 +148,15 @@ docs/ux/dizzyflow_scope_current_vs_v2.md
 
 * A file has been selected
 * Pre-processing review stage
+* Workflow options can still be adjusted before execution
 * Processing starts only after explicit user action
 
 ### Processing
 
 * Safe Lock is applied
 * Only cancel action is allowed
-* Results are streamed in a cumulative scrolling format
-* Active segment may be visually highlighted
-* Top area switches from controls to status messaging
+* The support region switches from option controls to status messaging
+* Heavy external processing intentionally disables other interactions
 
 ### Terminal States
 
@@ -138,28 +164,47 @@ docs/ux/dizzyflow_scope_current_vs_v2.md
 * Failed
 * Cancelled
 
-Completed focuses on result usage
-Failed focuses on error visibility
-Cancelled allows restart (rerun)
+Completed focuses on result usage.  
+Failed focuses on error visibility.  
+Cancelled allows restart (rerun).
+
+---
+
+## 🧩 Inspector Behavior
+
+The Inspector toggle remains in the toolbar intentionally.
+
+Unlike task-driving actions, the Inspector is an optional contextual panel that users may or may not need during a workflow. For that reason, it is treated as a lightweight view control rather than a primary workflow action.
+
+In DizzyFlow:
+
+* Primary workflow actions belong to the footer-first action area
+* Optional contextual view controls may remain in the toolbar
+* The Inspector is one of these allowed exceptions
+
+This distinction keeps the footer focused on workflow progression while allowing optional auxiliary panels to follow familiar macOS conventions.
 
 ---
 
 ## ⚙️ Settings Overview
 
-Settings is not a simple preferences panel.
-It is an operational workspace for managing runtime environment and engine assets.
+Settings is not a simple preferences panel.  
+It is a program-level configuration workspace for managing runtime environment and engine-related behavior.
+
+It supports both:
+
+* pre-configuring defaults before starting work
+* adjusting detailed behavior during use when needed
+
+At the current prototype stage, the high-level category structure is defined, but many detailed fields are still being finalized.
 
 ### Layout
 
-```
-Sidebar | Settings Main | Inspector
-```
+    Sidebar | Settings Main | Inspector
 
 ### Structure
 
-```
-Category List | Detailed Configuration Panel
-```
+    Category List | Detailed Configuration Panel
 
 ### Categories
 
@@ -179,18 +224,45 @@ Category List | Detailed Configuration Panel
 
 ---
 
+## 🔒 Processing Lock Policy
+
+During processing, DizzyFlow intentionally restricts user interaction.
+
+Because processing is driven by an external, heavy-running program, the application enters a protected interaction mode where:
+
+* primary editing and configuration interactions are disabled
+* workflow navigation is effectively locked for safety
+* cancel remains the only active control
+
+This behavior is intentional and is part of the workflow safety model rather than a temporary implementation limitation.
+
+---
+
+## 🧾 Support Region Behavior by State
+
+The support region above the bottom action row changes its role depending on workflow state.
+
+* Idle / Ready  
+  Displays adjustable workflow options such as FPS, language, and related parameters.
+
+* Processing / Completed / Failed / Cancelled  
+  Displays state-oriented messaging, progress context, and result guidance.
+
+This region should be understood as a support surface for the primary action row, not as a separate standalone feature area.
+
+---
+
 ## 📝 Code Style & Documentation
 
 * All source code comments are written in Korean
 * Naming and structure follow:
-
   * Apple Human Interface Guidelines (HIG)
   * Swift API Design Guidelines
 * Changes (docs, refactoring, API updates) should be recorded in:
-
   * Revision History (README)
   * changelog section in AGENT.md
 * Comment style should remain consistent across View / Store / Domain layers
+* Documentation should always reflect actual file names and current prototype terminology
 
 ---
 
@@ -222,9 +294,7 @@ Category List | Detailed Configuration Panel
 
 Run tests using:
 
-```
-xcodebuild test -scheme DizzyFlow -destination 'platform=macOS'
-```
+    xcodebuild test -scheme DizzyFlow -destination 'platform=macOS'
 
 * Both `DizzyFlowTests` and `DizzyFlowUITests` must pass before merging
 * If tests fail, include logs and environment details (macOS version, Xcode version)
@@ -245,23 +315,19 @@ xcodebuild test -scheme DizzyFlow -destination 'platform=macOS'
 ## 🤝 Working with Agents
 
 * If unfamiliar with Apple development, request summaries of:
-
   * HIG
   * Swift API Design Guidelines
   * App Store Review Guidelines
 * Before proposing new structures or libraries:
-
   * Validate platform compatibility (memory, sandbox, entitlements)
 * Before implementing UI/UX changes, review:
 
-  docs/ux/dizzyflow_ux_idle_ready.md
-  docs/ux/dizzyflow_ux_processing_terminal_states.md
-  docs/ux/dizzyflow_settings_ux.md
-  docs/ux/dizzyflow_scope_current_vs_v2.md
+  `docs/ux/dizzyflow_ux_master_guide.md`  
+  `docs/ux/dizzyflow_ui_standard.md`  
+  `docs/ux/dizzyflow_scope_current_vs_v2.md`
 
 ---
 
 ## 👤 Author
 
 Sanghyouk Jin
-

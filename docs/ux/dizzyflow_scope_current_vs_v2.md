@@ -1,8 +1,15 @@
 # DizzyFlow UX / Settings Scope Update
-Last updated: 2026-04-04
 
-이 문서는 현재 DizzyFlow 프로토타입 문서에 반영할 범위와
-차기 버전(2.0)으로 미루는 기능 범위를 명확히 정리한 기준 문서다.
+Last updated: 2026-04-05
+
+이 문서는 DizzyFlow 프로토타입 문서에서 현재 버전에 포함할 범위와
+차기 버전(2.0)으로 미루는 기능 범위를 명확히 구분하기 위한 기준 문서다.
+
+이 문서의 목적은 다음과 같다.
+
+- 현재 프로토타입 문서 범위를 흔들리지 않게 유지한다
+- 에이전트와 개발자가 현재 구현 대상과 향후 논의 대상을 혼동하지 않게 한다
+- 지금 필요한 workflow, settings, state transition 문서화에 집중하도록 돕는다
 
 ---
 
@@ -17,18 +24,20 @@ Last updated: 2026-04-04
     General / VAD / Preprocessor / Models / About & License
     Safe Lock 전략
     WhisperKit의 Intel Mac 비활성화 규칙
-    Inspector의 Tips! 형식 가이드
+    Inspector의 read-only Tips 형식 가이드
     WorkflowPhase 6단계 표준 방향
+    footer-first workflow 구조
+    BottomControlStack 기반의 Support Region / Action Row 구조
 
-즉 이번 문서는
-현재 실제로 프로토타입에 반영 가능한 범위와
+즉 현재 문서는
+실제 프로토타입에서 반영 가능한 범위와
 지금 당장 구현/설계 기준으로 필요한 부분까지만 다룬다.
 
 ---
 
-## 2. 2.0으로 미루는 기능
+## 2. 차기 버전(2.0)으로 미루는 기능
 
-다음 기능은 이미 논의가 있었지만
+다음 기능은 이미 논의가 있었더라도
 현재 버전 범위를 넘기 때문에 2.0에서 별도로 다룬다.
 
 ### 2.1 AI 편집 (GEM4)
@@ -44,10 +53,10 @@ AI 기반 편집 기능은 향후 DizzyFlow 2.0에서 다룬다.
     AI 편집용 모델 관리
 
 즉 GEM4는
-"향후 계획"으로만 남기고
+향후 계획으로만 남기고
 현재 버전 문서의 구현 범위에서는 제외한다.
 
-### 2.2 버전 관리
+### 2.2 고급 버전 관리
 
 Document의 고급 버전 관리 기능도 2.0에서 별도 논의한다.
 
@@ -60,7 +69,7 @@ Document의 고급 버전 관리 기능도 2.0에서 별도 논의한다.
     편집 결과의 버전 파생 관리
 
 즉 현재 버전은
-문서 상태 중심(Completed / Failed / Cancelled)과
+문서 상태 중심의 terminal UX와
 기본 결과 확인 UX까지만 다룬다.
 
 ---
@@ -76,6 +85,8 @@ Document의 고급 버전 관리 기능도 2.0에서 별도 논의한다.
     에이전트가 오해 없이 구현하기 위한 역할/상태 정의
     Settings / Workflow / Safe Lock 기준
     WorkflowPhase의 6단계 정렬 방향
+    footer-first interaction 구조
+    processing 중 protected interaction 규칙
 
 ### 제외할 것
 
@@ -89,7 +100,7 @@ Document의 고급 버전 관리 기능도 2.0에서 별도 논의한다.
 
 ## 4. 문서에 남기는 방식
 
-AI 편집(GEM4)와 버전 관리는
+AI 편집(GEM4)와 고급 버전 관리는
 현재 문서 본문에서 구현 범위처럼 다루지 않는다.
 
 대신 다음과 같은 방식으로만 남긴다.
@@ -116,17 +127,18 @@ AI 편집(GEM4)와 버전 관리는
     문서 범위가 흔들리지 않게 하기 위함
     에이전트가 아직 없는 기능을 현재 구현 대상으로 오해하지 않게 하기 위함
     지금 필요한 프로토타입 완성에 집중하기 위함
-    현재 버전과 2.0 논의를 분리하기 위함
+    현재 버전 논의와 2.0 논의를 분리하기 위함
 
 즉 지금은
 현재 흐름과 설정, 상태 전이, 모델 관리, 전처리 UX를 먼저 고정하고
-AI 편집과 버전 관리는 다음 단계에서 깊게 다루는 것이 맞다.
+AI 편집과 고급 버전 관리는 다음 단계에서 깊게 다루는 것이 맞다.
 
 ---
 
 ## 6. 요약
 
-현재 버전:
+### 현재 버전
+
     workflow 기본 흐름
     terminal states
     settings 구조
@@ -134,11 +146,15 @@ AI 편집과 버전 관리는 다음 단계에서 깊게 다루는 것이 맞다
     safe lock
     inspector tips
     WorkflowPhase 6단계 방향 정리
-    processing 하이라이트 규칙
+    processing 하이라이트 방향
     preprocessor 옵션 구체화
+    footer-first layout 구조
+    BottomControlStack 기반 하단 지원 구조
 
-2.0:
+### 2.0
+
     AI 편집 (GEM4)
     고급 버전 관리
 
-이 기준으로 전체 문서를 업데이트한다.
+이 기준을 바탕으로
+README, AGENT.md, 그리고 UX 관련 문서들을 현재 프로토타입 범위에 맞게 유지한다.

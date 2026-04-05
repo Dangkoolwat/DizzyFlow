@@ -223,18 +223,29 @@ Agents MUST follow the DizzyFlow UX structure, especially for the current protot
 
 ---
 
-## 🧭 macOS Version Compatibility
+## 🧭 macOS Compatibility Policy
 
-DizzyFlow must behave consistently across macOS 14 and macOS 15.
+DizzyFlow is currently validated primarily against macOS 14 and macOS 15.
 
-Agents MUST follow these rules:
+However, some implementation decisions were intentionally shaped with earlier macOS 13 support considerations in mind, even if the current project deployment configuration is set to macOS 14 or later.
 
-- Do NOT assume SwiftUI behavior is identical across macOS versions
-- Do NOT directly change `NavigationSplitView` behavior without validation
-- Do NOT rely blindly on default spacing, animation, or layout behavior
-- Do NOT scatter availability checks across many Views
-- Isolate version-specific behavior through helpers, modifiers, adapters, or wrappers
-- Keep user-facing UX consistent even if internal implementation differs
+This means:
+
+- do not assume compatibility-aware code is accidental
+- do not remove version-conscious layout or behavior adjustments casually
+- if a simplification is proposed because the deployment target is now macOS 14+, treat that as an explicit policy decision
+- preserve compatibility-aware intent unless the support policy is clearly revised and approved
+
+Agents must distinguish between:
+
+- current active validation baseline
+- historical compatibility-aware implementation intent
+
+When modifying compatibility-related code, clearly state whether the change is:
+
+- preserving existing compatibility-aware behavior
+- simplifying behavior because support policy changed
+- introducing a new version-specific adjustment
 
 ### Critical compatibility areas
 
@@ -344,3 +355,4 @@ over:
 - decorative UI polish
 
 When in doubt, preserve workflow integrity first and ask before changing direction.
+
