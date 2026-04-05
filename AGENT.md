@@ -38,7 +38,7 @@ Agents MUST NOT perform unauthorized modifications. Follow this strict protocol:
 ## 📚 Required Reference Docs
 Agents MUST review these documents before implementation:
 * `docs/development.md`: Technical architecture and layered structure.
-* `docs/ui/dizzyflow_ui_standard.md`: Footer-First layout and component standards.
+* `docs/ux/dizzyflow_ui_standard.md`: Footer-First layout and component standards.
 * `docs/ux/dizzyflow_ux_master_guide.md`: End-to-end workflow and phase definitions.
 * `docs/ux/dizzyflow_scope_current_vs_v2.md`: Prototype boundaries.
 
