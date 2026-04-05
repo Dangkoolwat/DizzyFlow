@@ -3,51 +3,21 @@ import SwiftUI
 /// Completed 전용 Workspace —
 /// 작업 성공 후 결과물을 확인하고 다운로드하는 화면.
 ///
-/// 액션 우선순위: FCPXML > SRT > 미리보기 > 새 작업
+/// 구성:
+/// - 중앙: SRT 전체 미리보기 (스크롤)
+/// - 하단: 2층 구조 (1층: 완료 메시지 / 2층: FCPXML, SRT, 새 작업)
 struct CompletedWorkspaceView: View {
     @ObservedObject var store: WorkflowStore
 
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: - 완료 헤더
-            completedHeader
-
-            Divider()
-
             // MARK: - SRT 전체 미리보기 (스크롤)
             srtPreviewSection
 
-            Divider()
-
-            // MARK: - 액션 버튼
-            actionsSection
+            // MARK: - 하단 2층 구조
+            bottomControlArea
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    // MARK: - Completed Header
-
-    private var completedHeader: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 32))
-                .foregroundStyle(.green)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text("작업이 완료되었습니다")
-                    .font(.title2)
-                    .fontWeight(.bold)
-
-                if let doc = store.selectedDocument {
-                    Text("\(doc.segments.count)개 세그먼트 생성")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-            }
-
-            Spacer()
-        }
-        .padding(20)
     }
 
     // MARK: - SRT Preview
@@ -81,52 +51,60 @@ struct CompletedWorkspaceView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(.textBackgroundColor).opacity(0.3))
+        .background(Color(NSColor.textBackgroundColor).opacity(0.6)) // Tahoe 대비 강화
     }
 
-    // MARK: - Actions
+    // MARK: - 하단 2층 구조
 
-    private var actionsSection: some View {
-        HStack(spacing: 16) {
-            // FCPXML (최우선)
-            Button {
-                // 향후 FCPXML 내보내기
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "film")
-                    Text("FCPXML 다운로드")
+    private var bottomControlArea: some View {
+        BottomControlStack {
+            // 1층: 완료 메시지
+            HStack {
+                Label {
+                    Text("작업이 완료되었습니다. 결과를 내려받거나 새 작업을 시작할 수 있습니다.")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                } icon: {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                }
+
+                Spacer()
+
+                if let doc = store.selectedDocument {
+                    Text("\(doc.segments.count)개 세그먼트")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
                 }
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-
-            // SRT
-            Button {
-                // 향후 SRT 내보내기
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "doc.text")
-                    Text("SRT 다운로드")
+        } actionContent: {
+            // 2층: 액션 버튼
+            HStack(spacing: 12) {
+                CapsuleActionButton(
+                    title: "FCPXML",
+                    icon: "film",
+                    isPrimary: true
+                ) {
+                    // 향후 FCPXML 내보내기
                 }
-            }
-            .buttonStyle(.bordered)
-            .controlSize(.large)
 
-            Spacer()
-
-            // 새 작업
-            Button {
-                store.startNewWorkflow()
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "plus.circle")
-                    Text("새 작업")
+                CapsuleActionButton(
+                    title: "SRT",
+                    icon: "doc.text"
+                ) {
+                    // 향후 SRT 내보내기
                 }
+
+                CapsuleActionButton(
+                    title: "새 작업",
+                    icon: "plus.circle"
+                ) {
+                    store.startNewWorkflow()
+                }
+
+                Spacer()
             }
-            .buttonStyle(.bordered)
-            .controlSize(.large)
         }
-        .padding(20)
     }
 
     // MARK: - Helpers

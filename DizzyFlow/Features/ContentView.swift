@@ -31,10 +31,6 @@ struct ContentView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    SettingsBarView(store: store)
-                }
-
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         showsInspector.toggle()

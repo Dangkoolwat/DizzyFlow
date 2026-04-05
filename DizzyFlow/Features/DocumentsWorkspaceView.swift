@@ -11,11 +11,6 @@ struct DocumentDetailView: View {
         Group {
             if let document = store.selectedDocument {
                 VStack(spacing: 0) {
-                    // 상단 설정/메시지 바
-                    SettingsBarView(store: store)
-
-                    Divider()
-
                     // 상태에 따른 메인 콘텐츠
                     phaseContent(for: document)
                 }

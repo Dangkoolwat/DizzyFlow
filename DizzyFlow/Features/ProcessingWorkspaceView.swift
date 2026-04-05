@@ -4,10 +4,9 @@ import SwiftUI
 /// Safe Lock 상태에서의 중앙 작업 영역.
 ///
 /// 구성:
-/// - 전용 진행 바
-/// - 현재 단계 메시지
-/// - 누적 스크롤형 실시간 결과 영역
-/// - Job Cancel 버튼
+/// - 상단: 전용 진행 바
+/// - 중앙: 누적 스크롤형 실시간 결과 영역
+/// - 하단: 2층 구조 (1층: 진행 메시지 / 2층: 작업 취소)
 struct ProcessingWorkspaceView: View {
     @ObservedObject var store: WorkflowStore
 
@@ -27,10 +26,8 @@ struct ProcessingWorkspaceView: View {
             // MARK: - 누적 스크롤 결과 영역
             scrollableResultsSection
 
-            Divider()
-
-            // MARK: - Job Cancel 버튼
-            cancelSection
+            // MARK: - 하단 2층 구조
+            bottomControlArea
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.windowBackgroundColor).opacity(0.96))
@@ -99,17 +96,14 @@ struct ProcessingWorkspaceView: View {
         Group {
             if let doc = store.selectedDocument {
                 if doc.segments.isEmpty {
-                    // 아직 세그먼트가 없을 때
                     VStack {
                         Spacer()
-
                         VStack(spacing: 12) {
                             ProgressView()
                             Text("엔진이 결과를 생성하는 중입니다...")
                                 .font(.body)
                                 .foregroundStyle(.secondary)
                         }
-
                         Spacer()
                     }
                 } else {
@@ -125,7 +119,6 @@ struct ProcessingWorkspaceView: View {
                                         .id(segment.id)
                                     }
 
-                                    // 스크롤 앵커
                                     Color.clear
                                         .frame(height: 1)
                                         .id(bottomAnchorID)
@@ -142,7 +135,6 @@ struct ProcessingWorkspaceView: View {
                             }
                         }
 
-                        // 자동 스크롤 토글 + 복귀 버튼
                         scrollControlButton
                     }
                 }
@@ -171,29 +163,52 @@ struct ProcessingWorkspaceView: View {
         .padding(16)
     }
 
-    // MARK: - Cancel Section
+    // MARK: - 하단 2층 구조
 
-    private var cancelSection: some View {
-        HStack {
-            Spacer()
+    private var bottomControlArea: some View {
+        BottomControlStack {
+            // 1층: 진행 메시지
+            HStack {
+                if let step = store.currentProcessingStep {
+                    Label {
+                        Text(step.rawValue)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    } icon: {
+                        Image(systemName: stepIcon(for: step))
+                            .foregroundStyle(Color.accentColor)
+                    }
 
-            Button(role: .destructive) {
-                store.cancelProcessing()
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "xmark.circle.fill")
-                    Text("작업 취소")
+                    Spacer()
+
+                    Text("\(Int(step.progress * 100))%")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .monospacedDigit()
+                } else {
+                    ProgressView()
+                        .controlSize(.small)
+                    Text("처리 준비 중...")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    Spacer()
                 }
-                .font(.body)
-                .fontWeight(.semibold)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.red)
-            .controlSize(.large)
+        } actionContent: {
+            // 2층: 작업 취소
+            HStack(spacing: 12) {
+                CapsuleActionButton(
+                    title: "작업 취소",
+                    icon: "xmark.circle.fill",
+                    isPrimary: true,
+                    isDestructive: true
+                ) {
+                    store.cancelProcessing()
+                }
 
-            Spacer()
+                Spacer()
+            }
         }
-        .padding(20)
     }
 
     // MARK: - Helpers

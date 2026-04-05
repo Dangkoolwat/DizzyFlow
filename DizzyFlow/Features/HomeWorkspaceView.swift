@@ -3,8 +3,8 @@ import UniformTypeIdentifiers
 
 /// Home Workspace — Idle/Ready 상태의 메인 작업 영역.
 ///
-/// - Idle: 파일 드롭/선택 유도 + 상단 설정 바
-/// - Ready: Mock 썸네일 + 파일 메타 확인 + 설정 요약 + "시작하기" 버튼
+/// - Idle: 파일 드롭/선택 유도 (중앙) + 하단 설정 + 파일 업로드 버튼
+/// - Ready: Mock 썸네일 + 파일 메타 확인 (중앙) + 하단 설정 + 시작하기 버튼
 ///
 /// 상세 메타 정보(포맷, 코덱 등)는 Inspector에서 표시.
 /// 중앙 Workspace에서는 "확신감"을 위한 시각 요소만 배치.
@@ -14,17 +14,20 @@ struct HomeWorkspaceView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // 메인 콘텐츠
+            // 메인 콘텐츠 (중앙 영역)
             if store.pendingFile != nil {
                 readyContent
             } else {
                 idleContent
             }
+
+            // 하단 2층 구조
+            bottomControlArea
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    // MARK: - Idle Content
+    // MARK: - Idle Content (중앙)
 
     private var idleContent: some View {
         VStack(spacing: 24) {
@@ -48,18 +51,6 @@ struct HomeWorkspaceView: View {
             // 파일 드롭 영역
             dropZone
 
-            // 파일 선택 버튼
-            Button {
-                simulateFileSelection()
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "folder.badge.plus")
-                    Text("미디어 파일 선택")
-                }
-            }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-
             Text("미디어 파일을 드래그하거나 선택하여 자막 워크플로우를 시작하세요.")
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -70,7 +61,7 @@ struct HomeWorkspaceView: View {
         .padding(40)
     }
 
-    // MARK: - Ready Content
+    // MARK: - Ready Content (중앙)
 
     private var readyContent: some View {
         VStack(spacing: 24) {
@@ -82,27 +73,6 @@ struct HomeWorkspaceView: View {
 
                 // 설정 요약 카드
                 settingsSummaryCard
-
-                // 시작 버튼
-                Button {
-                    store.startProcessing()
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "play.fill")
-                        Text("시작하기")
-                    }
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-
-                // 파일 변경
-                Button("다른 파일 선택") {
-                    store.clearPendingFile()
-                }
-                .buttonStyle(.plain)
-                .foregroundStyle(.secondary)
             }
 
             Spacer()
@@ -110,11 +80,102 @@ struct HomeWorkspaceView: View {
         .padding(40)
     }
 
+    // MARK: - 하단 2층 구조
+
+    private var bottomControlArea: some View {
+        BottomControlStack {
+            // 1층: 설정 피커 (Idle/Ready 공용)
+            settingsRow
+        } actionContent: {
+            // 2층: 액션 버튼
+            HStack(spacing: 12) {
+                if store.pendingFile != nil {
+                    // Ready 상태: 시작하기 + 다른 파일
+                    CapsuleActionButton(
+                        title: "시작하기",
+                        icon: "play.fill",
+                        isPrimary: true
+                    ) {
+                        store.startProcessing()
+                    }
+
+                    CapsuleActionButton(
+                        title: "다른 파일 선택",
+                        icon: "arrow.triangle.2.circlepath"
+                    ) {
+                        store.clearPendingFile()
+                    }
+                } else {
+                    // Idle 상태: 파일 업로드
+                    CapsuleActionButton(
+                        title: "미디어 파일 선택",
+                        icon: "folder.badge.plus",
+                        isPrimary: true
+                    ) {
+                        simulateFileSelection()
+                    }
+                }
+
+                Spacer()
+            }
+        }
+    }
+
+    // MARK: - 1층 설정 행
+
+    private var settingsRow: some View {
+        HStack(spacing: 16) {
+            settingPicker(
+                title: "FPS",
+                selection: $store.selectedFPS,
+                options: ["23.976", "24", "25", "29.97", "30", "60"]
+            )
+
+            settingPicker(
+                title: "언어",
+                selection: $store.selectedLanguage,
+                options: ["Korean", "English", "Japanese", "Chinese", "Auto"]
+            )
+
+            settingPicker(
+                title: "FCP 템플릿",
+                selection: $store.selectedTemplate,
+                options: ["Default", "Basic Title", "Custom Lower Third"]
+            )
+
+            settingPicker(
+                title: "전사 모델",
+                selection: $store.selectedModel,
+                options: ["Sherpa-onnx", "WhisperKit"]
+            )
+
+            Spacer()
+        }
+    }
+
+    private func settingPicker(
+        title: String,
+        selection: Binding<String>,
+        options: [String]
+    ) -> some View {
+        Menu {
+            Picker(title, selection: selection) {
+                ForEach(options, id: \.self) { option in
+                    Text(option).tag(option)
+                }
+            }
+            .labelsHidden()
+            .pickerStyle(.inline)
+        } label: {
+            Text("\(title): \(selection.wrappedValue)")
+                .font(.subheadline)
+        }
+        .menuStyle(.borderlessButton)
+        .fixedSize()
+    }
+
     // MARK: - File Confirmation Card
 
-    /// 사용자에게 "내가 올린 파일이 맞다"는 확신을 주는 시각적 카드.
-    /// Mock 썸네일(Placeholder) + 파일명 + 핵심 메타만 포함.
-    /// 상세 기술 메타는 Inspector에서 담당.
     private func fileConfirmationCard(file: PendingFileInfo) -> some View {
         HStack(spacing: 16) {
             // Mock 썸네일 영역
@@ -132,7 +193,6 @@ struct HomeWorkspaceView: View {
                     )
                     .frame(width: 120, height: 80)
 
-                // 파일 타입에 따른 아이콘
                 Image(systemName: file.systemIcon)
                     .font(.system(size: 32))
                     .foregroundStyle(Color.accentColor.opacity(0.8))
@@ -167,7 +227,6 @@ struct HomeWorkspaceView: View {
         .frame(maxWidth: 420)
     }
 
-    /// 메타정보 소형 배지
     private func metaBadge(icon: String, text: String) -> some View {
         HStack(spacing: 4) {
             Image(systemName: icon)
@@ -248,7 +307,6 @@ struct HomeWorkspaceView: View {
         }
     }
 
-    /// 파일 드롭 처리 — 프로토타입이므로 파일명만 추출하여 Store에 전달
     private func handleDrop(providers: [NSItemProvider]) {
         guard let provider = providers.first else { return }
         provider.loadItem(forTypeIdentifier: "public.file-url", options: nil) { item, _ in
@@ -260,7 +318,6 @@ struct HomeWorkspaceView: View {
         }
     }
 
-    /// 파일 선택 시뮬레이션 (프로토타입)
     private func simulateFileSelection() {
         store.prepareReady(fileName: "Interview_2026_04.mov")
     }
