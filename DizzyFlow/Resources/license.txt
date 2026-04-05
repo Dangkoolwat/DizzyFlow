@@ -1,0 +1,18 @@
+This is the official license information for DizzyFlow.
+
+DizzyFlow is a workflow-first subtitle creation platform built for macOS.
+
+The following third-party libraries and modules are used in this project:
+
+- WhisperKit (MIT License)
+- Sherpa-onnx (Apache-2.0 License)
+- SwiftUI (Apple Proprietary)
+- Combine (Apple Proprietary)
+
+Terms of Use:
+1. You may use this application for personal or commercial subtitle creation.
+2. The core processing engines are subject to their respective open-source licenses.
+3. No data is sent to external servers unless explicitly configured by the user.
+
+Contact: support@daangcool.com
+© 2026 Daangcool. All rights reserved.

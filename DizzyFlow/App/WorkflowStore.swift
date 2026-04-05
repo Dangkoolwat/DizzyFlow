@@ -1,5 +1,63 @@
 import Foundation
 import Combine
+import SwiftUI // ColorScheme 및 UI 관련 타입 지원용
+
+// MARK: - AppTheme
+
+/// DizzyFlow의 전역 색상 테마 설정.
+enum AppTheme: String, CaseIterable, Identifiable {
+    case light = "Light"
+    case dark = "Dark"
+    case auto = "Auto"
+
+    var id: String { rawValue }
+
+    var symbol: String {
+        switch self {
+        case .light: return "sun.max.fill"
+        case .dark: return "moon.fill"
+        case .auto: return "circle.lefthalf.filled"
+        }
+    }
+
+    var colorScheme: ColorScheme? {
+        switch self {
+        case .light: return .light
+        case .dark: return .dark
+        case .auto: return nil
+        }
+    }
+}
+
+// MARK: - GlobalSettings
+
+/// 앱 전체에서 유지되는 설정 데이터. (Detail Job Desc 6 반영)
+struct GlobalSettings {
+    // General (일반)
+    var language: String = "Korean"        // 드롭다운: 한국어 | 영어
+    var theme: AppTheme = .auto
+    var removeSymbolEnabled: Bool = false // 자동생성 문서에서 특정 기호 삭제
+    var modelDownloadLocation: String = "/usr/local/share/dizzyflow/models"
+
+    // VAD (Voice Activity Detection)
+    var vadThreshold: Double = 0.5
+    var vadAggressiveness: Int = 2
+
+    // Preprocessor (전처리)
+    var noiseReductionEnabled: Bool = true
+    var normalizationEnabled: Bool = true
+
+    // Models (모델)
+    var selectedEngine: String = "Sherpa-onnx"
+    // 각 서비스별 모델 정보 (향후 JSON 연동 예정)
+    var modelInfoJSON: String = "{}"
+
+    // License (라이선스)
+    var licenseInfo: String = "DizzyFlow는 다음 오픈소스 라이브러리를 사용합니다:\n- WhisperKit\n- Sherpa-onnx\n- Swift UI"
+
+    // Gemma4 (향후)
+    var gemmaPrompt: String = "기본 프롬프트: 자막의 가독성을 높여주세요."
+}
 
 // MARK: - WorkflowPhase
 
@@ -98,6 +156,14 @@ final class WorkflowStore: ObservableObject {
 
     /// Processing 중 현재 세부 단계
     @Published var currentProcessingStep: ProcessingStep?
+
+    // MARK: - Global Settings & Theme
+
+    /// 전역 앱 테마 (상단 툴바에서 제어)
+    @Published var appTheme: AppTheme = .auto
+
+    /// 상세 설정 데이터
+    @Published var globalSettings: GlobalSettings = GlobalSettings()
 
     /// Ready 단계의 대기 중인 파일 정보 (Document 생성 전 상태)
     @Published var pendingFile: PendingFileInfo?

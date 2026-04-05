@@ -33,6 +33,25 @@ struct ContentView: View {
             }
             .overlay(alignment: .top) { Divider() } // Sequoia(v15) 상단 구분선
             .toolbar {
+                // --- 테마 전환기 (아이콘 전용 메뉴) ---
+                ToolbarItem(placement: .primaryAction) {
+                    Menu {
+                        ForEach(AppTheme.allCases) { theme in
+                            Button {
+                                store.appTheme = theme
+                            } label: {
+                                Label(theme.rawValue, systemImage: theme.symbol)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: store.appTheme.symbol)
+                            .imageScale(.large)
+                    }
+                    .menuStyle(.borderlessButton)
+                    .help("앱 테마 변경")
+                }
+
+                // --- 인스펙터 토글 ---
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         showsInspector.toggle()
@@ -45,6 +64,7 @@ struct ContentView: View {
             .toolbarBackground(.visible, for: .windowToolbar) // 스크롤 시 콘텐츠 비침 방지
         }
         .frame(minWidth: 1000, minHeight: 640)
+        .preferredColorScheme(store.appTheme.colorScheme)
         // Document 선택 동기화: Store → Sidebar
         .onChange(of: store.selectedDocumentID) { _, newID in
             if let newID {
@@ -91,7 +111,11 @@ struct ContentView: View {
         }
         .safeAreaInset(edge: .bottom) {
             Button {
-                sidebarSelection = .settings
+                if sidebarSelection == .settings {
+                    sidebarSelection = .home
+                } else {
+                    sidebarSelection = .settings
+                }
             } label: {
                 HStack {
                     Label("Settings", systemImage: "gear")
@@ -177,7 +201,7 @@ struct ContentView: View {
             DocumentDetailView(store: store)
 
         case .settings:
-            SettingsPlaceholderView()
+            SettingsWorkspaceView(store: store)
         }
     }
 
@@ -191,29 +215,7 @@ struct ContentView: View {
     }
 }
 
-// MARK: - Settings Placeholder (Phase 4에서 구현)
-
-private struct SettingsPlaceholderView: View {
-    var body: some View {
-        VStack(spacing: 20) {
-            Spacer()
-
-            Image(systemName: "gear")
-                .font(.system(size: 48))
-                .foregroundStyle(.secondary)
-
-            Text("Settings")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-
-            Text("설정 화면은 다음 단계에서 구현됩니다.")
-                .foregroundStyle(.secondary)
-
-            Spacer()
-        }
-        .padding(40)
-    }
-}
+// MARK: - Legacy Placeholder Removed
 
 #Preview {
     ContentView(store: WorkflowStore())
