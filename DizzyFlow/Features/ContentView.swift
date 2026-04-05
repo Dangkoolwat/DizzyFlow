@@ -30,6 +30,7 @@ struct ContentView: View {
                         .background(.background)
                 }
             }
+            .overlay(alignment: .top) { Divider() } // Sequoia(v15) 상단 구분선
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
