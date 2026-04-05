@@ -134,6 +134,12 @@ Example:
 - Detected FPS: 23.976
 - Applied FPS: 24.0 (Manual Override)
 
+### 6.4 Bottom Control Stack & UI Components
+
+- The bottom of the workspace utilizes a "Bottom Control Stack" acting as a floating or separated rounded container.
+- **Directional Popups**: Any pop-up settings or menus located in the bottom control stack MUST strictly open **upwards** to avoid obscuring the primary action buttons below them. (Use `UpwardMenuPicker` to defeat automatic OS downward snapping).
+- Avoid native system snapping that covers content.
+
 ---
 
 ## 7. Processing UX
@@ -146,8 +152,8 @@ Example:
 
 ### 7.2 Workspace Structure
 
-- Top area: current engine stage
 - Main area: Segment Card list
+- Bottom stack: Actions and context-aware messaging
 - Inspector: progress, model information, and internal state
 
 ### 7.3 Cancel Policy
@@ -287,11 +293,12 @@ The main workflow should stay simple, while technical details are exposed in the
 - output status
 - internal logs or table-based technical details
 
-### 13.3 Information Design Principles
+### 13.3 Information Design Principles & Aesthetics
 
-- Present default information in a human-readable way.
-- Allow deeper technical details to be expanded.
-- Provide as much useful detail as possible without disrupting the main workflow.
+- **Semantic Card Grouping**: All information must be grouped logically into discrete, rounded rectangle cards.
+- **No Explicit Dividers**: Do NOT use `Divider()` lines. Use subtle background colors (`Color.black.opacity(0.03)` or similar native transparent variants) to establish visual hierarchy and depth. 
+- **No Redundant Headers**: Skip the static "Inspector" header. Let the card-based layout natively explain the context.
+- **Native macOS Feel**: Match the exact visual weight of Tahoe and Sequoia by keeping interactive layers distinct from static read-only cards.
 
 ---
 
@@ -321,5 +328,5 @@ The main workflow should stay simple, while technical details are exposed in the
 - Failed and Cancelled tasks are retryable when the source file still exists.
 - Preview is for review and must not become a replacement for a full editor.
 - Delete is destructive and should only be exposed through a hidden menu path.
-- The Inspector acts as the control tower that exposes technical state clearly.
+- **Visual Cleanliness**: Prefer spacing, rounded padding, and subtle opacity differences over hard lines (`Divider()`).
 - Workflow stability takes priority over feature expansion.
