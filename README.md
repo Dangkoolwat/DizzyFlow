@@ -84,7 +84,6 @@ Features
 Infrastructure
 Shared
 docs/ux
-docs/ui
 ```
 
 ---
@@ -96,7 +95,7 @@ The following documents define the current UX/UI standards for the DizzyFlow pro
 ```
 docs/ux/dizzyflow_ux_idle_ready.md
 docs/ux/dizzyflow_ux_processing_terminal_states.md
-docs/ui/dizzyflow_settings_ux.md
+docs/ux/dizzyflow_settings_ux.md
 docs/ux/dizzyflow_scope_current_vs_v2.md
 ```
 
@@ -257,7 +256,7 @@ xcodebuild test -scheme DizzyFlow -destination 'platform=macOS'
 
   docs/ux/dizzyflow_ux_idle_ready.md
   docs/ux/dizzyflow_ux_processing_terminal_states.md
-  docs/ui/dizzyflow_settings_ux.md
+  docs/ux/dizzyflow_settings_ux.md
   docs/ux/dizzyflow_scope_current_vs_v2.md
 
 ---
