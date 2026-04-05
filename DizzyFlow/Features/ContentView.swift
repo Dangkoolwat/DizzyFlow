@@ -33,21 +33,28 @@ struct ContentView: View {
             }
             .overlay(alignment: .top) { Divider() } // Sequoia(v15) 상단 구분선
             .toolbar {
-                // --- 테마 전환기 (아이콘 전용 메뉴) ---
+                // --- 테마 전환기 (아이콘 테마명 메뉴) ---
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
                         ForEach(AppTheme.allCases) { theme in
                             Button {
                                 store.appTheme = theme
                             } label: {
-                                Label(theme.rawValue, systemImage: theme.symbol)
+                                HStack {
+                                    Image(systemName: theme.symbol)
+                                    Text(theme.rawValue)
+                                }
                             }
                         }
                     } label: {
-                        Image(systemName: store.appTheme.symbol)
-                            .imageScale(.large)
+                        HStack(spacing: 6) {
+                            Image(systemName: store.appTheme.symbol)
+                            Text(store.appTheme.rawValue)
+                                .font(.body)
+                        }
                     }
                     .menuStyle(.borderlessButton)
+                    .buttonStyle(.plain) // 타호(v14) 테두리 제거
                     .help("앱 테마 변경")
                 }
 
@@ -58,6 +65,7 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "sidebar.right")
                     }
+                    .buttonStyle(.plain) // 타호(v14) 테두리 제거
                     .help(showsInspector ? "Hide Inspector" : "Show Inspector")
                 }
             }

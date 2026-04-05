@@ -73,7 +73,7 @@ struct SettingsWorkspaceView: View {
                         AboutSettingsView()
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(minWidth: 520, maxWidth: .infinity, maxHeight: .infinity)
             }
         }
     }
@@ -109,9 +109,9 @@ struct SettingsWorkspaceView: View {
 
 struct GeneralSettingsView: View {
     @ObservedObject var store: WorkflowStore
-    @State private var localLanguage: String = ""
+    @State private var localLanguage: String = "Korean" // 초기값을 유효한 태그로 설정
     @State private var removeSymbol: Bool = false
-    @State private var downloadPath: String = ""
+    @State private var downloadPath: String = "/usr/local/share/dizzyflow/models" // 기본 경로 설정
 
     var body: some View {
         VStack(spacing: 0) {
