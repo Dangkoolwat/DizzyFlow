@@ -21,6 +21,7 @@ struct ContentView: View {
             HStack(spacing: 0) {
                 mainWorkspace
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .clipped() // Tahoe(v14) 스크롤 콘텐츠 비침 방지
 
                 if showsInspector {
                     Divider()
