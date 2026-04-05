@@ -47,12 +47,11 @@ struct ContentView: View {
                             }
                         }
                     } label: {
-                        HStack(spacing: 6) {
-                            Image(systemName: store.appTheme.symbol)
-                            Text(store.appTheme.rawValue)
-                                .font(.body)
-                        }
+                        // 이미지와 텍스트를 시스템이 임의 분해하지 못하도록 '하나의 단일 Text 문자열'로 결합
+                        // 좌우 대칭을 위해 앞, 중간, 뒤에 일정한 스페이스바 공백(원시 여백) 강제 삽입
+                        Text("   \(Image(systemName: store.appTheme.symbol))  \(store.appTheme.rawValue)   ")
                     }
+                    .menuIndicator(.hidden) // 골칫덩어리 우측 꺾쇠(v) 기호 완전 제거
                     .menuStyle(.borderlessButton)
                     .buttonStyle(.plain) // 타호(v14) 테두리 제거
                     .help("앱 테마 변경")
@@ -64,6 +63,8 @@ struct ContentView: View {
                         showsInspector.toggle()
                     } label: {
                         Image(systemName: "sidebar.right")
+                            .font(.title3)
+                            .padding(.horizontal, 10)
                     }
                     .buttonStyle(.plain) // 타호(v14) 테두리 제거
                     .help(showsInspector ? "Hide Inspector" : "Show Inspector")
