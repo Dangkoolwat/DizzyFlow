@@ -64,20 +64,21 @@ struct HomeWorkspaceView: View {
     // MARK: - Ready Content (중앙)
 
     private var readyContent: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 16) {
             Spacer()
 
             if let file = store.pendingFile {
-                // 파일 확인 카드 (썸네일 + 메타 요약)
+                // 파일 확인 카드 (썸네일 + 메타 요약) — 메인 컬러 테두리
                 fileConfirmationCard(file: file)
 
-                // 설정 요약 카드
+                // 설정 요약 카드 — 동일 너비
                 settingsSummaryCard
             }
 
             Spacer()
         }
-        .padding(40)
+        .padding(.horizontal, 60)
+        .padding(.vertical, 40)
     }
 
     // MARK: - 하단 2층 구조
@@ -171,6 +172,7 @@ struct HomeWorkspaceView: View {
                 .font(.subheadline)
         }
         .menuStyle(.borderlessButton)
+        .menuOrder(.fixed) // 하단 위치 → 위 방향 팝업 시 항목 순서 유지
         .fixedSize()
     }
 
@@ -214,17 +216,19 @@ struct HomeWorkspaceView: View {
                     .font(.caption)
                     .foregroundStyle(.tertiary)
             }
+
+            Spacer(minLength: 0)
         }
         .padding(16)
+        .frame(maxWidth: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 14)
-                .fill(Color(.controlBackgroundColor))
+                .fill(Color.black.opacity(0.03))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 14)
-                .strokeBorder(Color.accentColor.opacity(0.2), lineWidth: 1)
+                .strokeBorder(Color.accentColor.opacity(0.5), lineWidth: 1.5)
         )
-        .frame(maxWidth: 420)
     }
 
     private func metaBadge(icon: String, text: String) -> some View {
@@ -245,7 +249,8 @@ struct HomeWorkspaceView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("적용 설정")
                 .font(.caption)
-                .foregroundStyle(.tertiary)
+                .fontWeight(.semibold)
+                .foregroundStyle(.secondary)
                 .textCase(.uppercase)
 
             settingSummaryRow(label: "FPS", value: store.selectedFPS)
@@ -254,11 +259,11 @@ struct HomeWorkspaceView: View {
             settingSummaryRow(label: "전사 모델", value: store.selectedModel)
         }
         .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.controlBackgroundColor))
+            RoundedRectangle(cornerRadius: 14)
+                .fill(Color.black.opacity(0.03))
         )
-        .frame(maxWidth: 320)
     }
 
     // MARK: - Drop Zone

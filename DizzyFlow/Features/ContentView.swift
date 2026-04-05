@@ -41,6 +41,7 @@ struct ContentView: View {
                     .help(showsInspector ? "Hide Inspector" : "Show Inspector")
                 }
             }
+            .toolbarBackground(.visible, for: .windowToolbar) // 스크롤 시 콘텐츠 비침 방지
         }
         .frame(minWidth: 1000, minHeight: 640)
         // Document 선택 동기화: Store → Sidebar
