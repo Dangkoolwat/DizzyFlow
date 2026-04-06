@@ -10,6 +10,7 @@ This document defines the strict operational procedures, architectural principle
 | 2026-04-01 | Sanghyouk Jin | Initial setup with Apple-focused standards and project vision |
 | 2026-04-04 | Sanghyouk Jin / AI | Updated UX paths and scope boundaries |
 | 2026-04-05 | Sanghyouk Jin / AI | v1.5 update: integrated strict 3-step approval workflow and centralized Footer-First UI standards |
+| 2026-04-06 | Sanghyouk Jin / AI | Added strict documentation placement policy and prohibited unofficial docs folders |
 
 ---
 
@@ -113,6 +114,60 @@ If a requested change conflicts with these documents, the agent must stop and ra
 
 ---
 
+## 📁 Documentation Placement Policy
+
+Agents MUST follow the repository documentation taxonomy strictly.
+
+Do NOT create new top-level documentation folders unless explicitly approved.
+
+### Approved documentation locations
+
+- `docs/ux`
+  - current UX/UI standards
+  - layout rules
+  - interaction rules
+  - naming / labeling rules
+  - information architecture notes
+
+- `docs/product`
+  - product planning documents
+  - feature concept documents
+  - post-prototype design notes
+  - versioned planning such as 2.1 / 2.2 / 2.3+
+
+- `docs/roadmap`
+  - phased execution plans
+  - milestone planning
+  - staged rollout notes
+
+- `docs/development.md`
+  - project-wide development rules only
+  - not a storage location for feature proposals
+
+### Rules
+
+- Do NOT create or use folders such as `docs/front-end`, `docs/frontend`, `docs/ui`, or similar alternatives unless the user explicitly approves them.
+- If a document is about current UI/UX structure, place it under `docs/ux`.
+- If a document is about future feature direction or version planning, place it under `docs/product` or `docs/roadmap`.
+- If unsure, ask before creating a new documentation category.
+- Preserve the existing documentation structure and naming conventions.
+
+### Examples
+
+- UI naming/display rules  
+  -> `docs/ux/naming_and_labeling.md`
+
+- Sidebar structure proposal  
+  -> `docs/ux/sidebar_information_architecture.md`
+
+- DizzyFlow 2.1 planning document  
+  -> `docs/product/dizzyflow_2_1_master_plan.md`
+
+- 2.2 refinement stage plan  
+  -> `docs/roadmap/dizzyflow_2_2_controlled_refinement.md`
+
+---
+
 ## 🍎 External Apple Reference Guidelines
 
 Agents MUST align with Apple platform standards when implementing UI, interaction, and platform behavior.
@@ -142,23 +197,23 @@ Primary references:
 
 ## 🧱 Core Implementation Rules
 
-1. **SSOT**
+1. SSOT
    - `WorkflowStore` is the only source of truth
    - state transitions must happen in the Store, not in Views
 
-2. **Workflow Safety**
+2. Workflow Safety
    - Sidebar and Inspector must be disabled during `isProcessing`
    - agents must preserve interaction safety during processing states
 
-3. **Footer-First UI**
+3. Footer-First UI
    - never add primary control UI to the top toolbar
    - use the footer stack and approved footer-based control patterns
 
-4. **Compatibility**
+4. Compatibility
    - maintain visual contrast and readability on macOS 14
    - maintain layout stability and interaction consistency on macOS 15
 
-5. **Scope Discipline**
+5. Scope Discipline
    - do not implement real external integrations unless explicitly requested
    - do not add advanced editing UI prematurely
    - do not expand the inspector beyond the current approved role
@@ -319,7 +374,7 @@ Agents MUST respond using this structure after implementation:
 
 ## 🧭 Current Phase
 
-Current project phase: **Prototype Phase 1**
+Current project phase: Prototype Phase 1
 
 Primary focus:
 
@@ -355,4 +410,3 @@ over:
 - decorative UI polish
 
 When in doubt, preserve workflow integrity first and ask before changing direction.
-
