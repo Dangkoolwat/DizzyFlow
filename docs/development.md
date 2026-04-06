@@ -11,6 +11,7 @@ This document serves as the technical standard and architectural blueprint for t
 | 2026-04-01 | Sanghyouk Jin | Initial setup with SwiftUI + Observation standards |
 | 2026-04-05 | Sanghyouk Jin / AI | v1.1 Update: Relocated to /docs and integrated Bottom Control Stack standards |
 | 2026-04-05 | Sanghyouk Jin / AI | v1.2 Update: Aligned development guidance with footer-first workflow model, protected processing state, and current documentation structure |
+| 2026-04-06 | Sanghyouk Jin / AI | v1.3 Update: Added localization implementation rules and Xcode String Catalog guidance |
 
 ---
 
@@ -341,7 +342,112 @@ Do not prematurely implement:
 
 ---
 
-## 10. Validation Rules
+## 10. Localization Implementation Rules
+
+Localization must remain a presentation-layer concern.
+
+Do not:
+
+- hardcode new user-facing strings in views when they belong in localization resources
+- use enum raw values as UI labels
+- store localized text in domain models
+- translate external payload text
+- build variable user-facing strings through raw concatenation
+- couple localized values to persistence or workflow logic
+
+Do:
+
+- use Xcode localization resources for application-authored user-facing strings
+- keep English and Korean resources updated together
+- use full localized wrapper strings for variable messages
+- consult `docs/ux/terms.md` before introducing new product terminology
+- keep implementation aligned with `docs/ux/localization.md` and `AGENT.md`
+
+### Recommended Resource Location
+
+Recommended primary resource:
+
+- `Resources/Localization/DizzyFlow.xcstrings`
+
+A single String Catalog file is acceptable for v1 if semantic key discipline is maintained.
+
+### Required Key Namespaces
+
+Use these namespaces:
+
+- `term.*`
+- `phase.*`
+- `workflow.*`
+- `settings.*`
+- `shared.*`
+- `error.*`
+- `external.*`
+- `view.*`
+
+Examples:
+
+- `phase.processing.label`
+- `phase.processing.status`
+- `workflow.action.cancel`
+- `settings.general.programLanguage.label`
+- `external.import.failed`
+
+### Workflow State Resource Pattern
+
+Use separate keys for compact labels and sentence-style status text when the UI role differs.
+
+Preferred:
+
+- `phase.processing.label`
+- `phase.processing.status`
+- `phase.completed.label`
+- `phase.completed.status`
+
+This is especially important for Korean UI naturalness.
+
+### Variable String Pattern
+
+Preferred:
+
+- localized full format string in catalog
+- payload inserted through placeholder
+
+Good examples:
+
+- English: `Import failed: %@`
+- Korean: `가져오기에 실패했습니다: %@`
+
+Avoid:
+
+- `"가져오기 실패: " + payload`
+- `"\(payload)을 불러오지 못했습니다"` when payload grammar is unpredictable
+
+### Domain Mapping Pattern
+
+Preferred pattern:
+
+- domain state remains language-neutral
+- presentation maps state to localization keys
+- localized resources provide final display text
+
+Example direction:
+
+- `WorkflowPhase.processing` -> `phase.processing.label`
+- `WorkflowPhase.processing` -> `phase.processing.status`
+
+### Review Rule
+
+When changing localization-related code or resources, review:
+
+- `docs/ux/terms.md`
+- `docs/ux/localization.md`
+- `AGENT.md`
+
+Update documentation where needed in the same change.
+
+---
+
+## 11. Validation Rules
 
 Preferred test command:
 
@@ -362,7 +468,7 @@ When relevant, validation reports should mention:
 
 ---
 
-## 11. Relationship to Other Documents
+## 12. Relationship to Other Documents
 
 This guide should be read together with:
 
@@ -371,6 +477,8 @@ This guide should be read together with:
 - `docs/ux/dizzyflow_ui_standard.md`
 - `docs/ux/dizzyflow_ux_master_guide.md`
 - `docs/ux/dizzyflow_scope_current_vs_v2.md`
+- `docs/ux/terms.md`
+- `docs/ux/localization.md`
 
 Document roles:
 
@@ -389,9 +497,15 @@ Document roles:
 - `dizzyflow_scope_current_vs_v2.md`  
   current prototype boundary versus future scope
 
+- `terms.md`  
+  canonical product terminology
+
+- `localization.md`  
+  localization policy and Xcode String Catalog structure
+
 ---
 
-## 12. Final Rule
+## 13. Final Rule
 
 When in doubt, prefer:
 

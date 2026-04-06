@@ -11,6 +11,7 @@ This document defines the strict operational procedures, architectural principle
 | 2026-04-04 | Sanghyouk Jin / AI | Updated UX paths and scope boundaries |
 | 2026-04-05 | Sanghyouk Jin / AI | v1.5 update: integrated strict 3-step approval workflow and centralized Footer-First UI standards |
 | 2026-04-06 | Sanghyouk Jin / AI | Added strict documentation placement policy and prohibited unofficial docs folders |
+| 2026-04-06 | Sanghyouk Jin / AI | Added concise localization workflow rules and cross-document references |
 
 ---
 
@@ -111,6 +112,38 @@ These documents define critical project boundaries, including:
 - current prototype limits and what must not be implemented yet
 
 If a requested change conflicts with these documents, the agent must stop and raise the conflict before proceeding.
+
+---
+
+## 🌐 Localization Rules
+
+Agents MUST treat localization as a structured product concern.
+
+When a task affects user-facing strings, terminology, labeling, or localization behavior, review:
+
+- `docs/ux/terms.md`
+- `docs/ux/localization.md`
+- `docs/development.md`
+
+Rules:
+
+- localize application-authored user-facing UI text
+- do not localize externally produced payload content
+- preserve terminology consistency using `docs/ux/terms.md`
+- keep localization independent from workflow and domain logic
+- use Xcode localization resources for user-facing strings
+- keep English and Korean resources synchronized
+- update affected localization documents when policy, terminology, or implementation rules change
+
+Localization-related completion reports must additionally state:
+
+- whether `docs/ux/terms.md` was reviewed or updated
+- whether `docs/ux/localization.md` was reviewed or updated
+- whether `docs/development.md` was reviewed or updated
+- whether English and Korean resources were both updated
+- whether external payload text was preserved
+- whether new localization keys were added
+- whether any terminology decisions remain unresolved
 
 ---
 
