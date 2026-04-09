@@ -263,14 +263,14 @@ Therefore:
 
 Related documents:
 
-- `AGENT.md`
+- `AGENTS.md`
 - `docs/ux/terms.md`
 - `docs/development.md`
 
 Responsibility split:
 
 - `docs/ux/terms.md` = terminology source of truth
-- `AGENT.md` = agent behavior rules
+- `AGENTS.md` = agent behavior rules
 - `docs/development.md` = implementation guidance
 
 ## 13. Completion Reporting

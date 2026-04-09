@@ -86,6 +86,6 @@ When adding a new term:
 
 ## Related Documents
 
-- `AGENT.md`
+- `AGENTS.md`
 - `docs/ux/localization.md`
 - `docs/development.md`

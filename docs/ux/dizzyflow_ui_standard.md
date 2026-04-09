@@ -313,7 +313,7 @@ If a proposed UX change crosses these boundaries, it should be treated as a scop
 This document should be read together with:
 
 - `README.md`
-- `AGENT.md`
+- `AGENTS.md`
 - `docs/ux/dizzyflow_ui_standard.md`
 - `docs/ux/dizzyflow_scope_current_vs_v2.md`
 
@@ -322,7 +322,7 @@ Document roles:
 - `README.md`  
   project overview and documentation entry point
 
-- `AGENT.md`  
+- `AGENTS.md`  
   implementation and collaboration rules
 
 - `dizzyflow_ui_standard.md`  

@@ -361,7 +361,7 @@ Do:
 - keep English and Korean resources updated together
 - use full localized wrapper strings for variable messages
 - consult `docs/ux/terms.md` before introducing new product terminology
-- keep implementation aligned with `docs/ux/localization.md` and `AGENT.md`
+- keep implementation aligned with `docs/ux/localization.md` and `AGENTS.md`
 
 ### Recommended Resource Location
 
@@ -441,7 +441,7 @@ When changing localization-related code or resources, review:
 
 - `docs/ux/terms.md`
 - `docs/ux/localization.md`
-- `AGENT.md`
+- `AGENTS.md`
 
 Update documentation where needed in the same change.
 
@@ -473,7 +473,7 @@ When relevant, validation reports should mention:
 This guide should be read together with:
 
 - `README.md`
-- `AGENT.md`
+- `AGENTS.md`
 - `docs/ux/dizzyflow_ui_standard.md`
 - `docs/ux/dizzyflow_ux_master_guide.md`
 - `docs/ux/dizzyflow_scope_current_vs_v2.md`
@@ -485,7 +485,7 @@ Document roles:
 - `README.md`  
   project overview and documentation entry point
 
-- `AGENT.md`  
+- `AGENTS.md`  
   implementation and collaboration rules
 
 - `dizzyflow_ui_standard.md`  

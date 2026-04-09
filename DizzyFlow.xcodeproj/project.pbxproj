@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CBC807542F7BE61400E81968 /* AGENT.md in Resources */ = {isa = PBXBuildFile; fileRef = CBC807522F7BE61400E81968 /* AGENT.md */; };
+		CBC807542F7BE61400E81968 /* AGENTS.md in Resources */ = {isa = PBXBuildFile; fileRef = CBC807522F7BE61400E81968 /* AGENTS.md */; };
 		CBC807552F7BE61400E81968 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CBC807532F7BE61400E81968 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +32,7 @@
 		CB05B5BD2F7BCE8B0023848D /* DizzyFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DizzyFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB05B5CA2F7BCE8C0023848D /* DizzyFlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DizzyFlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB05B5D42F7BCE8C0023848D /* DizzyFlowUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DizzyFlowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CBC807522F7BE61400E81968 /* AGENT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AGENT.md; sourceTree = "<group>"; };
+		CBC807522F7BE61400E81968 /* AGENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AGENTS.md; sourceTree = "<group>"; };
 		CBC807532F7BE61400E81968 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,7 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				CBC807562F7BE67F00E81968 /* docs */,
-				CBC807522F7BE61400E81968 /* AGENT.md */,
+				CBC807522F7BE61400E81968 /* AGENTS.md */,
 				CBC807532F7BE61400E81968 /* README.md */,
 				CB05B5BF2F7BCE8B0023848D /* DizzyFlow */,
 				CB05B5CD2F7BCE8C0023848D /* DizzyFlowTests */,
@@ -227,7 +227,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBC807542F7BE61400E81968 /* AGENT.md in Resources */,
+				CBC807542F7BE61400E81968 /* AGENTS.md in Resources */,
 				CBC807552F7BE61400E81968 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

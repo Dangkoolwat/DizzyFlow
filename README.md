@@ -260,7 +260,7 @@ This region should be understood as a support surface for the primary action row
   * Swift API Design Guidelines
 * Changes (docs, refactoring, API updates) should be recorded in:
   * Revision History (README)
-  * changelog section in AGENT.md
+  * changelog section in AGENTS.md
 * Comment style should remain consistent across View / Store / Domain layers
 * Documentation should always reflect actual file names and current prototype terminology
 
