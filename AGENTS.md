@@ -122,6 +122,7 @@ The following may be treated as trivial only if they do not affect structure or 
 - isolated compile fixes with no contract change
 
 If the task appears small but could affect workflow integrity, stop and ask.
+For Trivial work, agents may use the **Fast Track** approach: skip the proposal phase and implement immediately without waiting for explicit user approval.
 
 ### 1. Inquiry & Proposal Phase
 
@@ -132,6 +133,8 @@ Before implementation:
 - explain pros, cons, and technical trade-offs of each option
 - recommend one approach when appropriate
 - wait for explicit user approval before implementation
+
+Proposals should be provided in chat or as temporary artifacts. Do NOT create permanent proposal files (like `SPEC.md`) in the `docs/` folder unless explicitly requested.
 
 Agents MUST NOT begin implementation until the user explicitly selects or approves an approach.
 
@@ -221,6 +224,10 @@ Agents MUST follow the repository documentation taxonomy strictly.
 Do NOT create new top-level documentation folders unless explicitly approved.
 
 ### Approved documentation locations
+
+- `docs/agent-logs`
+  - 에이전트 작업 내역 및 히스토리 로그
+  - 하위 구조 예시: `YYYY-MM-DD-task/`
 
 - `docs/ux`
   - current UX/UI standards
