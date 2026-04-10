@@ -4,6 +4,43 @@ This document defines the strict operational procedures, architectural principle
 
 ---
 
+## Quick Operating Rules
+
+Read this section first before making any change.
+
+1. For any non-trivial task, do not implement immediately.
+2. First analyze the request and propose 2-3 approaches.
+3. Explain trade-offs briefly and recommend one approach when appropriate.
+4. Wait for explicit user approval before implementation.
+5. After approval, implement only the approved scope.
+6. After implementation, report files changed, reasoning, verification, and what was intentionally not implemented.
+7. Never commit unless the user explicitly approves the commit.
+
+If any global or session-level instruction conflicts with this file, follow the stricter DizzyFlow rule for:
+
+- approval flow
+- workflow safety
+- output and reporting format
+- scope control
+
+When unsure, stop and ask rather than silently expanding scope.
+
+---
+
+## Instruction Priority For This Repository
+
+Use the following priority order when working in DizzyFlow:
+
+1. explicit user instruction
+2. this `AGENTS.md`
+3. required project docs under `docs/`
+4. code, tests, configs
+5. global or default assistant behavior
+
+If a higher-level assistant instruction encourages immediate implementation, minimal questioning, or concise output, but this file requires proposal-first workflow, approval, or detailed reporting, this file takes precedence for DizzyFlow work.
+
+---
+
 ## Revision History
 | Date | Contributor | Summary |
 | --- | --- | --- |
@@ -12,6 +49,7 @@ This document defines the strict operational procedures, architectural principle
 | 2026-04-05 | Sanghyouk Jin / AI | v1.5 update: integrated strict 3-step approval workflow and centralized Footer-First UI standards |
 | 2026-04-06 | Sanghyouk Jin / AI | Added strict documentation placement policy and prohibited unofficial docs folders |
 | 2026-04-06 | Sanghyouk Jin / AI | Added concise localization workflow rules and cross-document references |
+| 2026-04-10 | Sanghyouk Jin / AI | Reorganized for faster agent comprehension and explicit conflict-resolution rules |
 
 ---
 
@@ -38,7 +76,7 @@ Agents MUST internalize the following principles before making changes:
 - Workflow stability is more important than feature expansion
 - Users choose intent, not models
 - Technology stays in the engine room
-- All input/output must normalize through `SubtitleDocument`
+- All input and output must normalize through `SubtitleDocument`
 - `WorkflowStore` is the single source of truth
 - Review is optional and must never block the main workflow
 - State should carry data where possible and avoid duplication
@@ -55,15 +93,45 @@ Agents MUST NOT perform unauthorized modifications.
 
 Follow this strict protocol for all non-trivial work.
 
+### What counts as non-trivial work
+
+Treat the task as non-trivial if it affects one or more of the following:
+
+- workflow phases or state transitions
+- `WorkflowStore`
+- `SubtitleDocument`
+- shared models, stores, or interfaces
+- footer workflow controls
+- sidebar / workspace / inspector responsibilities
+- localization structure or terminology
+- architecture, folder structure, or data flow
+- concurrency, cancellation, or error handling behavior
+- compatibility-sensitive macOS UI behavior
+- shared UX patterns or reusable components
+
+If there is doubt, classify it as non-trivial.
+
+### What may count as trivial work
+
+The following may be treated as trivial only if they do not affect structure or behavior materially:
+
+- small typo fixes
+- narrow copy updates
+- localized cosmetic corrections
+- tiny view-level fixes with no state-flow impact
+- isolated compile fixes with no contract change
+
+If the task appears small but could affect workflow integrity, stop and ask.
+
 ### 1. Inquiry & Proposal Phase
 
 Before implementation:
 
-- Analyze the current problem, limitation, or requested change
-- Propose 2-3 distinct alternatives (Approach A, B, and C when applicable)
-- Explain the pros, cons, and technical trade-offs of each option
-- Recommend one approach when appropriate
-- Wait for explicit user approval before implementation
+- analyze the current problem, limitation, or requested change
+- propose 2-3 distinct alternatives
+- explain pros, cons, and technical trade-offs of each option
+- recommend one approach when appropriate
+- wait for explicit user approval before implementation
 
 Agents MUST NOT begin implementation until the user explicitly selects or approves an approach.
 
@@ -71,22 +139,22 @@ Agents MUST NOT begin implementation until the user explicitly selects or approv
 
 After approval:
 
-- Keep the implementation minimal and incremental
-- Preserve existing folder structure unless explicitly told otherwise
-- Avoid unrelated refactoring
-- Respect the approved scope only
-- Do not silently expand the feature set
+- keep the implementation minimal and incremental
+- preserve existing folder structure unless explicitly told otherwise
+- avoid unrelated refactoring
+- respect the approved scope only
+- do not silently expand the feature set
 
 ### 3. Post-Work Verification Phase
 
 After implementation:
 
-- Present the files changed
-- Explain why the chosen approach was used
-- Provide full code changes
-- Report build/test/self-check results
-- Clearly state what was intentionally not implemented
-- Wait for user review
+- present the files changed
+- explain why the chosen approach was used
+- provide full code changes
+- report build/test/self-check results
+- clearly state what was intentionally not implemented
+- wait for user review
 
 Commits are strictly prohibited until the user explicitly provides approval for commit.
 
@@ -100,6 +168,11 @@ Agents MUST review these documents before implementation:
 - `docs/ux/dizzyflow_ui_standard.md`
 - `docs/ux/dizzyflow_ux_master_guide.md`
 - `docs/ux/dizzyflow_scope_current_vs_v2.md`
+
+If the task affects terminology, user-facing text, or localization behavior, also review:
+
+- `docs/ux/terms.md`
+- `docs/ux/localization.md`
 
 ### Why these docs matter
 
@@ -118,12 +191,6 @@ If a requested change conflicts with these documents, the agent must stop and ra
 ## 🌐 Localization Rules
 
 Agents MUST treat localization as a structured product concern.
-
-When a task affects user-facing strings, terminology, labeling, or localization behavior, review:
-
-- `docs/ux/terms.md`
-- `docs/ux/localization.md`
-- `docs/development.md`
 
 Rules:
 
@@ -187,16 +254,16 @@ Do NOT create new top-level documentation folders unless explicitly approved.
 
 ### Examples
 
-- UI naming/display rules  
+- UI naming/display rules
   -> `docs/ux/naming_and_labeling.md`
 
-- Sidebar structure proposal  
+- Sidebar structure proposal
   -> `docs/ux/sidebar_information_architecture.md`
 
-- DizzyFlow 2.1 planning document  
+- DizzyFlow 2.1 planning document
   -> `docs/product/dizzyflow_2_1_master_plan.md`
 
-- 2.2 refinement stage plan  
+- 2.2 refinement stage plan
   -> `docs/roadmap/dizzyflow_2_2_controlled_refinement.md`
 
 ---
@@ -207,24 +274,24 @@ Agents MUST align with Apple platform standards when implementing UI, interactio
 
 Primary references:
 
-- Apple Human Interface Guidelines  
+- Apple Human Interface Guidelines
   `https://developer.apple.com/design/human-interface-guidelines/`
 
-- Swift API Design Guidelines  
+- Swift API Design Guidelines
   `https://www.swift.org/documentation/api-design-guidelines/`
 
-- App Store Review Guidelines  
+- App Store Review Guidelines
   `https://developer.apple.com/app-store/review/guidelines/`
 
-- AppKit Documentation  
+- AppKit Documentation
   `https://developer.apple.com/documentation/appkit`
 
 ### Rules for using references
 
-- Do NOT guess platform behavior
-- Do NOT invent non-standard macOS interaction patterns
-- Prefer Apple conventions unless the project documents explicitly override them
-- If unsure, align with HIG first, then project-specific UX docs
+- do not guess platform behavior
+- do not invent non-standard macOS interaction patterns
+- prefer Apple conventions unless the project documents explicitly override them
+- if unsure, align with HIG first, then project-specific UX docs
 
 ---
 
@@ -397,11 +464,13 @@ Agents MUST respond using this structure after implementation:
 
 1. Files changed
 2. Reason for approach
-3. Alternatives considered (if this was part of the proposal phase)
+3. Alternatives considered
 4. Full code changes
 5. Build result / test result / self-check result
 6. What was intentionally not implemented
 7. Risks or follow-up points, if relevant
+
+If verification could not be completed, state that explicitly and explain why.
 
 ---
 
