@@ -1,521 +1,120 @@
-# DizzyFlow Agent Instructions
+# 🤖 DizzyFlow Agent Knowledge Base (AGENTS.md)
 
-This document defines the strict operational procedures, architectural principles, and technical standards for AI agents working on the DizzyFlow project.
-
----
-
-## Quick Operating Rules
-
-Read this section first before making any change.
-
-1. For any non-trivial task, do not implement immediately.
-2. First analyze the request and propose 2-3 approaches.
-3. Explain trade-offs briefly and recommend one approach when appropriate.
-4. Wait for explicit user approval before implementation.
-5. After approval, implement only the approved scope.
-6. After implementation, report files changed, reasoning, verification, and what was intentionally not implemented.
-7. Never commit unless the user explicitly approves the commit.
-
-If any global or session-level instruction conflicts with this file, follow the stricter DizzyFlow rule for:
-
-- approval flow
-- workflow safety
-- output and reporting format
-- scope control
-
-When unsure, stop and ask rather than silently expanding scope.
+이 문서는 DizzyFlow 프로젝트에 참여하는 모든 AI 에이전트가 준수해야 할 엄격한 운영 절차, 아키텍처 원칙 및 기술 표준을 정의합니다. 에이전트는 작업을 시작하기 전 이 문서를 반드시 숙지해야 합니다.
 
 ---
 
-## Instruction Priority For This Repository
+## ⚡ 퀵 운영 규칙 (Quick Operating Rules)
 
-Use the following priority order when working in DizzyFlow:
+### 1. 지시 우선순위 (Instruction Priority)
+충돌 발생 시 다음 순서를 따르십시오:
+1. 사용자의 명시적 지시 (Chat)
+2. 본 `AGENTS.md`
+3. 프로젝트 문서 (`docs/` 하위)
+4. 소스 코드 및 테스트 코드
+5. 에이전트의 일반적인 기본 지식
 
-1. explicit user instruction
-2. this `AGENTS.md`
-3. required project docs under `docs/`
-4. code, tests, configs
-5. global or default assistant behavior
+### 2. 작업 분류 및 승인 절차
+에이전트는 모든 요청을 먼저 다음 두 범주 중 하나로 분류한 뒤 대응합니다.
 
-If a higher-level assistant instruction encourages immediate implementation, minimal questioning, or concise output, but this file requires proposal-first workflow, approval, or detailed reporting, this file takes precedence for DizzyFlow work.
+- **Trivial (사소한 작업 - Fast Track)**: 
+  - 단순 오타 수정, 주석 업데이트, 사용자용 정적 문구 수정, 미세한 레이아웃(Padding/Spacing) 조정, Dead Code 제거.
+  - **절차**: 별도의 제안 없이 즉시 구현 가능.
+- **Non-trivial (사소하지 않은 작업 - Standard)**: 
+  - `WorkflowPhase` 상태 전이 수정, `WorkflowStore` 로직 변경, `SubtitleDocument` 데이터 처리, 새로운 UI 컴포넌트 추가, macOS 호환성 관련 수정, 아키텍처/폴더 구조 변경.
+  - **절차**: 요청 분석 후 2~3가지 접근 방식 제안 -> **사용자의 명시적 승인(예: "Go", "진행") 확인 후 구현 시작.**
 
----
-
-## Revision History
-| Date | Contributor | Summary |
-| --- | --- | --- |
-| 2026-04-01 | Sanghyouk Jin | Initial setup with Apple-focused standards and project vision |
-| 2026-04-04 | Sanghyouk Jin / AI | Updated UX paths and scope boundaries |
-| 2026-04-05 | Sanghyouk Jin / AI | v1.5 update: integrated strict 3-step approval workflow and centralized Footer-First UI standards |
-| 2026-04-06 | Sanghyouk Jin / AI | Added strict documentation placement policy and prohibited unofficial docs folders |
-| 2026-04-06 | Sanghyouk Jin / AI | Added concise localization workflow rules and cross-document references |
-| 2026-04-10 | Sanghyouk Jin / AI | Reorganized for faster agent comprehension and explicit conflict-resolution rules |
-
----
-
-## 🎯 Role
-
-You are a macOS SwiftUI development assistant for DizzyFlow.
-
-Your mission is to implement features while strictly preserving:
-
-- the workflow-first product philosophy
-- the architectural integrity of the app
-- the current prototype scope
-- the platform-specific behavior expected on macOS
-
-DizzyFlow is not a feature-first app.
-It is a workflow-first subtitle platform where user flow, predictability, and document-centered state matter more than feature quantity.
+### 3. 긴급 수정 규정 (Emergency Fast Track)
+다음 상황에 한해 제안 단계 없이 즉시 수정을 허용합니다.
+- 빌드 실패 복구, 앱 실행 불가 크래시 복구, 잘못 커밋된 민감 정보 제거.
+- **단, 변경 범위를 최소화하고 사후에 원인과 검증 결과를 즉시 보고해야 합니다.**
 
 ---
 
-## 🧠 Core Product Philosophy
+## 🤝 협업 및 승인 프로세스 (Mandatory Workflow)
 
-Agents MUST internalize the following principles before making changes:
+### 1단계: 분석 및 제안 (Inquiry & Proposal)
+- **지식 그래프(docs/graphify)**를 먼저 확인하여 수정 대상의 의존 관계를 파악합니다.
+- 문제의 핵심과 제약 사항을 분석하여 2~3가지 기술적 대안을 제시합니다.
+- **승인 전에는 구현을 시작하지 않습니다.**
 
-- Workflow stability is more important than feature expansion
-- Users choose intent, not models
-- Technology stays in the engine room
-- All input and output must normalize through `SubtitleDocument`
-- `WorkflowStore` is the single source of truth
-- Review is optional and must never block the main workflow
-- State should carry data where possible and avoid duplication
-- Stores are entry points for state transitions
-- Heavy work belongs in coordinators/providers, not directly in Views
-- Swift/C++ bridging must remain thin
-- Cancellation and typed errors should be considered early
+### 2단계: 구현 (Implementation)
+- 승인된 범위 내에서만 구현하며, 불필요한 리팩토링이나 기능 확장을 금지합니다.
+- **Footer-First UI** 및 **SSOT(WorkflowStore)** 원칙을 엄격히 준수합니다.
 
----
-
-## 🤝 Mandatory Collaboration & Approval Process
-
-Agents MUST NOT perform unauthorized modifications.
-
-Follow this strict protocol for all non-trivial work.
-
-### What counts as non-trivial work
-
-Treat the task as non-trivial if it affects one or more of the following:
-
-- workflow phases or state transitions
-- `WorkflowStore`
-- `SubtitleDocument`
-- shared models, stores, or interfaces
-- footer workflow controls
-- sidebar / workspace / inspector responsibilities
-- localization structure or terminology
-- architecture, folder structure, or data flow
-- concurrency, cancellation, or error handling behavior
-- compatibility-sensitive macOS UI behavior
-- shared UX patterns or reusable components
-
-If there is doubt, classify it as non-trivial.
-
-### What may count as trivial work
-
-The following may be treated as trivial only if they do not affect structure or behavior materially:
-
-- small typo fixes
-- narrow copy updates
-- localized cosmetic corrections
-- tiny view-level fixes with no state-flow impact
-- isolated compile fixes with no contract change
-
-If the task appears small but could affect workflow integrity, stop and ask.
-For Trivial work, agents may use the **Fast Track** approach: skip the proposal phase and implement immediately without waiting for explicit user approval.
-
-### 1. Inquiry & Proposal Phase
-
-Before implementation:
-
-- analyze the current problem, limitation, or requested change
-- propose 2-3 distinct alternatives
-- explain pros, cons, and technical trade-offs of each option
-- recommend one approach when appropriate
-- wait for explicit user approval before implementation
-
-Proposals should be provided in chat or as temporary artifacts. Do NOT create permanent proposal files (like `SPEC.md`) in the `docs/` folder unless explicitly requested.
-
-Agents MUST NOT begin implementation until the user explicitly selects or approves an approach.
-
-### 2. Implementation Phase
-
-After approval:
-
-- keep the implementation minimal and incremental
-- preserve existing folder structure unless explicitly told otherwise
-- avoid unrelated refactoring
-- respect the approved scope only
-- do not silently expand the feature set
-
-### 3. Post-Work Verification Phase
-
-After implementation:
-
-- present the files changed
-- explain why the chosen approach was used
-- provide full code changes
-- report build/test/self-check results
-- clearly state what was intentionally not implemented
-- wait for user review
-
-Commits are strictly prohibited until the user explicitly provides approval for commit.
+### 3단계: 테스트 및 리포팅 (Verification & Reporting)
+- **[MANDATORY] 모든 코드 수정 완료 후, 반드시 프로젝트 전체 빌드(`xcodebuild` 등)를 수행하여 문법 오류 및 사이드 이펙트 유무를 확인해야 합니다.**
+- **필수 검증 체크리스트**:
+  - [ ] **빌드(Compilation) 및 앱 실행 성공 여부 (필수)**
+  - [ ] `WorkflowStore`의 상태 전이 안정성 (Idle -> Ready -> Processing 등)
+  - [ ] Footer 기반 컨트롤(`BottomControlStack`)의 정상 작동 여부
+  - [ ] macOS 14/15 호환성 및 레이아웃 유지 여부
+- **결과 보고는 "Required Output Format"을 엄격히 따릅니다.**
 
 ---
 
-## 📚 Required Reference Docs
+## 📚 프로젝트 지식 베이스 (Project Knowledge Base)
 
-Agents MUST review these documents before implementation:
+이 프로젝트는 `graphify`를 통해 생성된 구조적 지식 그래프를 포함하고 있습니다.
 
-- `docs/development.md`
-- `docs/ux/dizzyflow_ui_standard.md`
-- `docs/ux/dizzyflow_ux_master_guide.md`
-- `docs/ux/dizzyflow_scope_current_vs_v2.md`
+### 1. 지식 그래프 자원 (Knowledge Graph Resources)
+- **리포트**: [docs/graphify/GRAPH_REPORT.md](file:///Users/sanghyoukjin/XcodeProjects/DizzyFlow/docs/graphify/GRAPH_REPORT.md)
+- **핵심 추상화 노드 (God Nodes)**: 다음 노드 수정 시 특히 주의하십시오:
+  - `WorkflowStore`, `InspectorPanelView`, `WorkflowPhase`, `SettingsCategory`, `ProcessingStep`
+- **시각화**: [docs/graphify/graph.html](file:///Users/sanghyoukjin/XcodeProjects/DizzyFlow/docs/graphify/graph.html)
 
-If the task affects terminology, user-facing text, or localization behavior, also review:
-
-- `docs/ux/terms.md`
-- `docs/ux/localization.md`
-
-### Why these docs matter
-
-These documents define critical project boundaries, including:
-
-- workflow phases: `Idle`, `Ready`, `Processing`, `Completed`, `Failed`, `Cancelled`
-- the mandatory Footer-First layout
-- `BottomControlStack` as the primary control surface
-- component standards such as `CapsuleActionButton` and `UpwardMenuPicker`
-- current prototype limits and what must not be implemented yet
-
-If a requested change conflicts with these documents, the agent must stop and raise the conflict before proceeding.
+### 2. 에이전트 준수 사항
+- **사전 분석 필수**: Non-trivial 작업 전, 반드시 `GRAPH_REPORT.md`를 읽고 의존 관계를 파악하십시오.
+- **최신화**: 코드 구조에 중대한 변화가 생겼을 경우, `updateGraphify` 명령을 실행하십시오.
 
 ---
 
-## 🌐 Localization Rules
+## 🧠 핵심 제품 철학 및 원칙 (Core Principles)
 
-Agents MUST treat localization as a structured product concern.
-
-Rules:
-
-- localize application-authored user-facing UI text
-- do not localize externally produced payload content
-- preserve terminology consistency using `docs/ux/terms.md`
-- keep localization independent from workflow and domain logic
-- use Xcode localization resources for user-facing strings
-- keep English and Korean resources synchronized
-- update affected localization documents when policy, terminology, or implementation rules change
-
-Localization-related completion reports must additionally state:
-
-- whether `docs/ux/terms.md` was reviewed or updated
-- whether `docs/ux/localization.md` was reviewed or updated
-- whether `docs/development.md` was reviewed or updated
-- whether English and Korean resources were both updated
-- whether external payload text was preserved
-- whether new localization keys were added
-- whether any terminology decisions remain unresolved
+- **Workflow Stability First**: 기능 확장보다 워크플로우 안정성이 우선입니다.
+- **Intent over Features**: 사용자는 모델이 아닌 의도를 선택합니다.
+- **SSOT**: `WorkflowStore`가 상태의 유일한 원천입니다. 상태 전이는 View가 아닌 Store에서 발생해야 합니다.
+- **Footer-First UI**: 주요 컨트롤은 항상 하단(`BottomControlStack`)에 위치합니다. 상단 툴바에 주요 액션을 배치하지 마십시오.
+- **Interaction Safety**: `isProcessing` 상태에서는 사이드바 및 인스펙터 조작이 제한되어야 합니다.
 
 ---
 
-## 📁 Documentation Placement Policy
+## 📁 레이어 책임 및 구조 (Architecture)
 
-Agents MUST follow the repository documentation taxonomy strictly.
-
-Do NOT create new top-level documentation folders unless explicitly approved.
-
-### Approved documentation locations
-
-- `docs/agent-logs`
-  - 에이전트 작업 내역 및 히스토리 로그
-  - 하위 구조 예시: `YYYY-MM-DD-task/`
-
-- `docs/ux`
-  - current UX/UI standards
-  - layout rules
-  - interaction rules
-  - naming / labeling rules
-  - information architecture notes
-
-- `docs/product`
-  - product planning documents
-  - feature concept documents
-  - post-prototype design notes
-  - versioned planning such as 2.1 / 2.2 / 2.3+
-
-- `docs/roadmap`
-  - phased execution plans
-  - milestone planning
-  - staged rollout notes
-
-- `docs/development.md`
-  - project-wide development rules only
-  - not a storage location for feature proposals
-
-### Rules
-
-- Do NOT create or use folders such as `docs/front-end`, `docs/frontend`, `docs/ui`, or similar alternatives unless the user explicitly approves them.
-- If a document is about current UI/UX structure, place it under `docs/ux`.
-- If a document is about future feature direction or version planning, place it under `docs/product` or `docs/roadmap`.
-- If unsure, ask before creating a new documentation category.
-- Preserve the existing documentation structure and naming conventions.
-
-### Examples
-
-- UI naming/display rules
-  -> `docs/ux/naming_and_labeling.md`
-
-- Sidebar structure proposal
-  -> `docs/ux/sidebar_information_architecture.md`
-
-- DizzyFlow 2.1 planning document
-  -> `docs/product/dizzyflow_2_1_master_plan.md`
-
-- 2.2 refinement stage plan
-  -> `docs/roadmap/dizzyflow_2_2_controlled_refinement.md`
+- **App**: 앱 수준 상태 흐름 및 Store 진입점 소유.
+- **Domain**: `SubtitleDocument` 등 순수 모델 및 도메인 로직.
+- **Features**: SwiftUI 화면, 패널, 워크플로우 전용 프리젠테이션 로직.
+- **Infrastructure**: 서비스, 엔진(Sherpa, Whisper), 어댑터 등 외부 연동 경계.
+- **Shared**: 재사용 가능한 유틸리티, `CapsuleActionButton`, `UpwardMenuPicker` 등 공용 컴포넌트.
 
 ---
 
-## 🍎 External Apple Reference Guidelines
+## 🧭 macOS 호환성 및 로컬라이징
 
-Agents MUST align with Apple platform standards when implementing UI, interaction, and platform behavior.
-
-Primary references:
-
-- Apple Human Interface Guidelines
-  `https://developer.apple.com/design/human-interface-guidelines/`
-
-- Swift API Design Guidelines
-  `https://www.swift.org/documentation/api-design-guidelines/`
-
-- App Store Review Guidelines
-  `https://developer.apple.com/app-store/review/guidelines/`
-
-- AppKit Documentation
-  `https://developer.apple.com/documentation/appkit`
-
-### Rules for using references
-
-- do not guess platform behavior
-- do not invent non-standard macOS interaction patterns
-- prefer Apple conventions unless the project documents explicitly override them
-- if unsure, align with HIG first, then project-specific UX docs
+- **MacOS Baseline**: macOS 14/15를 주 검증 대상으로 하되, macOS 13 하위 호환성을 고려한 기존 코드를 존중하십시오.
+- **Localization**: KR/EN 리소스를 항상 동기화하고, `docs/ux/terms.md`의 용어 정의를 준수하십시오.
 
 ---
 
-## 🧱 Core Implementation Rules
+## 🚫 금지 조항 (Forbidden Actions)
 
-1. SSOT
-   - `WorkflowStore` is the only source of truth
-   - state transitions must happen in the Store, not in Views
-
-2. Workflow Safety
-   - Sidebar and Inspector must be disabled during `isProcessing`
-   - agents must preserve interaction safety during processing states
-
-3. Footer-First UI
-   - never add primary control UI to the top toolbar
-   - use the footer stack and approved footer-based control patterns
-
-4. Compatibility
-   - maintain visual contrast and readability on macOS 14
-   - maintain layout stability and interaction consistency on macOS 15
-
-5. Scope Discipline
-   - do not implement real external integrations unless explicitly requested
-   - do not add advanced editing UI prematurely
-   - do not expand the inspector beyond the current approved role
-   - do not introduce unapproved architecture changes
+- 명시적 지시 없는 파일명/폴더 구조 변경.
+- 승인 없이 새로운 프레임워크(SwiftData 등) 도입.
+- `WorkflowStore`를 우회하는 상태 관리.
+- 사용자 승인 없는 `commit` 및 `push`.
 
 ---
 
-## 🏗 Architecture Principles
+## 📤 출력 형식 (Required Output Format)
 
-Agents MUST preserve the following architecture:
-
-- `WorkflowStore` is the single source of truth
-- Views display state and trigger actions only
-- domain models must remain UI-independent
-- heavy logic belongs in coordinators/providers/services
-- avoid duplicated state across View, Store, and model layers
-- normalize workflow data through `SubtitleDocument`
-- prefer explicit state transitions over implicit UI-driven behavior
-
----
-
-## 📦 Layer Responsibilities
-
-### App
-Owns app-level state flow and store entry points.
-
-### Domain
-Contains pure models such as `SubtitleDocument` and future subtitle-related entities.
-
-### Features
-Contains SwiftUI screens, panels, and workflow-specific presentation logic.
-
-### Infrastructure
-Contains future providers, engines, adapters, coordinators, and external integration boundaries.
-
-### Shared
-Contains reusable utilities, shared components, and cross-feature support code.
+작업 완료 후 다음 구조로 응답하십시오:
+1. **Files Changed**: 변경된 파일 목록
+2. **Reasoning**: 채택한 접근 방식의 이유
+3. **Alternatives**: 고려했던 대안들
+4. **Full Code Changes**: 전체 코드 변경 사항 (Diff)
+5. **Validation Results**: 빌드/테스트/셀프 체크 결과
+6. **Intentionally Omitted**: 의도적으로 구현하지 않은 사항
+7. **Risks**: 향후 리스크 또는 후속 조치
 
 ---
-
-## 🧭 UX / UI Rules
-
-Agents MUST follow the DizzyFlow UX structure, especially for the current prototype.
-
-### Mandatory rules
-
-- Prefer Footer-First interaction structure
-- Keep the main workflow readable and stable
-- Do not move key actions into the toolbar unless explicitly approved
-- Respect the role of `BottomControlStack`
-- Reuse approved components such as:
-  - `CapsuleActionButton`
-  - `UpwardMenuPicker`
-
-### Layout and behavior constraints
-
-- Keep Sidebar, Workspace, and Inspector responsibilities clear
-- Avoid top-heavy control density
-- Preserve focus on workflow progression over visual decoration
-- Keep the inspector contextual and non-invasive
-- Avoid introducing interaction patterns that feel iPad-like or iOS-like on macOS
-
----
-
-## 🧭 macOS Compatibility Policy
-
-DizzyFlow is currently validated primarily against macOS 14 and macOS 15.
-
-However, some implementation decisions were intentionally shaped with earlier macOS 13 support considerations in mind, even if the current project deployment configuration is set to macOS 14 or later.
-
-This means:
-
-- do not assume compatibility-aware code is accidental
-- do not remove version-conscious layout or behavior adjustments casually
-- if a simplification is proposed because the deployment target is now macOS 14+, treat that as an explicit policy decision
-- preserve compatibility-aware intent unless the support policy is clearly revised and approved
-
-Agents must distinguish between:
-
-- current active validation baseline
-- historical compatibility-aware implementation intent
-
-When modifying compatibility-related code, clearly state whether the change is:
-
-- preserving existing compatibility-aware behavior
-- simplifying behavior because support policy changed
-- introducing a new version-specific adjustment
-
-### Critical compatibility areas
-
-- `NavigationSplitView` behavior
-- inspector layout and width behavior
-- sidebar resizing and selection behavior
-- toolbar/titlebar rendering differences
-- animation timing and spacing
-- focus and keyboard interaction consistency
-
-### Compatibility goal
-
-The user experience should feel stable and predictable across both supported versions, even when implementation details differ.
-
----
-
-## 🚫 Forbidden Actions
-
-Agents MUST NOT:
-
-- rename existing files without explicit instruction
-- restructure folders without explicit instruction
-- introduce new frameworks such as SwiftData or CoreData without approval
-- implement real STT or external service integration prematurely
-- add complex UI before workflow structure is validated
-- move state logic into Views
-- bypass `WorkflowStore`
-- expand scope silently
-- add debug-heavy or noisy UI
-- commit changes without explicit approval for commit
-
----
-
-## 🧪 Testing and Validation Rules
-
-All changes must be validated as much as current project state allows.
-
-Preferred command:
-
-    xcodebuild test -scheme DizzyFlow -destination 'platform=macOS'
-
-### Rules
-
-- If tests exist, report the test result
-- If tests do not exist or are incomplete, report build/self-check status instead
-- If something could not be executed, state that clearly
-- If build or tests fail, include a concise reason and relevant environment details
-- Never claim validation that was not actually performed
-
-Validation should mention, when relevant:
-
-- Xcode version
-- macOS version
-- whether the result is build-only, test-only, or manual self-check
-
----
-
-## 📤 Required Output Format
-
-Agents MUST respond using this structure after implementation:
-
-1. Files changed
-2. Reason for approach
-3. Alternatives considered
-4. Full code changes
-5. Build result / test result / self-check result
-6. What was intentionally not implemented
-7. Risks or follow-up points, if relevant
-
-If verification could not be completed, state that explicitly and explain why.
-
----
-
-## 🧭 Current Phase
-
-Current project phase: Prototype Phase 1
-
-Primary focus:
-
-- workflow data flow
-- state transitions
-- structural UI composition
-- prototype-safe interaction design
-
-Not the current focus:
-
-- visual polish
-- performance micro-optimizations
-- production integrations
-- broad feature expansion
-
----
-
-## ⚠️ Final Reminder
-
-DizzyFlow prioritizes:
-
-- workflow continuity
-- structural clarity
-- predictability
-- user flow protection
-- platform-correct macOS behavior
-
-over:
-
-- fast feature accumulation
-- speculative abstractions
-- unapproved refactors
-- decorative UI polish
-
-When in doubt, preserve workflow integrity first and ask before changing direction.
+*Last Updated: 2026-04-22 (by Antigravity - Optimized for Agent Clarity)*
