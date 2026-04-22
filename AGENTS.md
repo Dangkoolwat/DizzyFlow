@@ -18,11 +18,11 @@ In case of conflict, follow this order:
 Classify every request into one of these categories before responding:
 
 - **Trivial (Fast Track)**: 
-  - Typo fixes, comment updates, static UI text changes, minor layout adjustments (Padding/Spacing), dead code removal.
+  - Typo fixes, comment updates, static UI text changes, minor layout adjustments (Padding/Spacing), dead code removal, and small local code changes that do not affect shared state, file I/O, external binaries, public contracts, or workflow transitions.
   - **Procedure**: Immediate implementation without a prior proposal.
 - **Non-trivial (Standard)**: 
-  - `WorkflowPhase` transitions, `WorkflowStore` logic changes, `SubtitleDocument` data handling, new UI components, macOS compatibility fixes, architecture/folder structure changes.
-  - **Procedure**: Analyze -> Propose 2-3 approaches -> **Wait for explicit approval (e.g., "Go", "Proceed")** -> Implementation.
+  - `WorkflowPhase` transitions, `WorkflowStore` logic changes, `SubtitleDocument` data handling, new UI components, macOS compatibility fixes, architecture/folder structure changes, and other changes that affect shared state, workflow flow, or architecture.
+  - **Procedure**: Analyze -> check `docs/graphify/GRAPH_REPORT.md` -> if the change touches shared contracts, high-risk zones, or cross-cutting behavior, propose 2-3 approaches and **wait for explicit approval**; otherwise implement the narrowest safe fix directly.
 
 ### 3. Emergency Fast Track
 Immediate fixes are allowed ONLY for:
@@ -35,15 +35,17 @@ Immediate fixes are allowed ONLY for:
 
 ### Step 1: Inquiry & Proposal
 - **MUST check the Knowledge Graph (docs/graphify)** first to understand dependencies (God Nodes, etc.).
-- Analyze the core problem and constraints to present 2-3 technical alternatives.
-- **DO NOT start implementation without approval.**
+- Analyze the core problem and constraints.
+- For ambiguous, shared, or high-risk changes, present 2-3 technical alternatives and wait for explicit approval before implementation.
+- For clearly local, low-risk changes, proceed with the narrowest safe fix after the graph check.
 
 ### Step 2: Implementation
 - Implement ONLY within the approved scope. No unauthorized refactoring or feature expansion.
 - Strictly adhere to **Footer-First UI** and **SSOT (WorkflowStore)** principles.
 
 ### Step 3: Verification & Reporting
-- **[MANDATORY] Perform a full project build (`xcodebuild`, etc.)** after all code changes to ensure no syntax errors or side effects.
+- **[MANDATORY] Perform a full project build (`xcodebuild`, etc.)** after code changes that can affect runtime behavior, integration, or shared state.
+- For doc-only or clearly local low-risk edits, run the strongest practical scoped check and state any skipped verification explicitly.
 - **Verification Checklist**:
   - [ ] **Successful Build & App Launch (Required)**
   - [ ] Stability of `WorkflowStore` transitions (Idle -> Ready -> Processing, etc.)
@@ -56,6 +58,7 @@ Immediate fixes are allowed ONLY for:
 ## 📚 Project Knowledge Base (Graphify)
 
 This project utilizes a structural knowledge graph generated via `graphify`.
+The graph is a decision aid, not a source of truth. If the graph, code, tests, or docs disagree, follow the higher-priority source in the repository instruction hierarchy.
 
 ### 1. Resources
 - **Report (Human-Readable)**: [docs/graphify/GRAPH_REPORT.md](file:///Users/sanghyoukjin/XcodeProjects/DizzyFlow/docs/graphify/GRAPH_REPORT.md)
@@ -65,7 +68,8 @@ This project utilizes a structural knowledge graph generated via `graphify`.
 
 ### 2. Agent Compliance
 - **Pre-analysis Required**: Read `GRAPH_REPORT.md` before any Non-trivial task to understand system-wide impact.
-- **Update Graph**: Run the `updateGraphify` command whenever significant architectural changes occur.
+- **Update Graph**: When code structure changes in a significant way, refresh the graph with `graphify update .` and then move the generated output into `docs/graphify/` with `mv graphify-out/* docs/graphify/`.
+- **Practical Use**: Use the graph to narrow scope and identify impacted nodes, but do not let the graph block ordinary safe implementation when the code change is clearly local and low risk. For token efficiency, read only the relevant section of `GRAPH_REPORT.md` unless the task is cross-cutting.
 
 ---
 
