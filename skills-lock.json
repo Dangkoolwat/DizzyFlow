@@ -77,7 +77,7 @@
       "computedHash": "e12da57e9a9c515a5602f842624e694cf922ec395990e8f92c0a3093e165e5c8c"
     },
     "scan-code-review-rules": {
-      "source": "duc01226/easyplatform",
+      "source": "duc01226/easyplatform@scan-code-review-rules",
       "sourceType": "github",
       "computedHash": "c0c3c083dde7cc1f0e5ed647c5ca80a3f0ef83c200612cbe7276cdbb53758bbf0"
     },
