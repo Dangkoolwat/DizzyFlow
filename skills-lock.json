@@ -1,100 +1,15 @@
 {
   "version": 1,
   "skills": {
-    "apple-appstore-reviewer": {
-      "source": "github/awesome-copilot",
-      "sourceType": "github",
-      "computedHash": "848a1946f838e1b36f4af8b65caeea9e5bfa486d6059325520bb6124c05b0526"
-    },
-    "apple-hig-designer": {
-      "source": "github/awesome-copilot",
-      "sourceType": "github",
-      "computedHash": "f8623b08709e378c2e64caeea9e5bfa486d6059325520bb6124c05b0526"
-    },
-    "build-macos-apps": {
-      "source": "mosif16/codex-skills",
-      "sourceType": "github",
-      "computedHash": "b67a65868903dd8ccbeb0ce019b95a78f380bef4a8181df146a4a072d44fc217"
-    },
-    "build-run-debug": {
-      "source": "mosif16/codex-skills@build-macos-apps",
-      "sourceType": "github",
-      "computedHash": "fa35c2531e74538d5952cf40a23a1707ef0e9c260830326ef9c86b9f728a2e1f"
-    },
-    "context7": {
-      "source": "intellectronica/agent-skills",
-      "sourceType": "github",
-      "computedHash": "fccbea654f8e35824a8bdce3e059e206efeb6c1fab9f6c096c3867e761081983"
-    },
     "ffmpeg": {
       "source": "digitalsamba/claude-code-video-toolkit",
       "sourceType": "github",
       "computedHash": "51fa05bc18bb2691e622aefd1d8ec6d4d96a9e9c44cdf599003c9d6003d11a07"
     },
-    "find-skills": {
-      "source": "vercel-labs/skills",
-      "sourceType": "github",
-      "computedHash": "d31e234f0c90694a670222cdd1dafa853e051d7066beda389f1097c22dadd461"
-    },
-    "grammar-checker": {
-      "source": "daleseo/korean-skills",
-      "sourceType": "github",
-      "computedHash": "02c4d99c0e3ba2d70ebc3a0e992ccd6dea84cdffa83aa7d16cba3dd41af1afe1"
-    },
-    "graphify": {
-      "source": "akillness/oh-my-skills",
-      "sourceType": "github",
-      "computedHash": "25b67f0220e237c1a1e35aacfa02e2240c6265cb27b28a3d954bb27617caff07"
-    },
-    "humanizer": {
-      "source": "daleseo/korean-skills",
-      "sourceType": "github",
-      "computedHash": "f0eb2aa9e2515e99471fbd085d514141bfc4873f3683f76815a237d64c2cd834"
-    },
-    "ios-developer": {
-      "source": "sickn33/antigravity-awesome-skills",
-      "sourceType": "github",
-      "computedHash": "05368506f581b694ca654b7bb379539f794c1956eac76de12be2628b455c1fab"
-    },
     "karpathy-guidelines": {
       "source": "forrestchang/andrej-karpathy-skills",
       "sourceType": "github",
       "computedHash": "41e8ca055bbde13d240776a14a076a59614057200340c243130a76ba4e64cac8"
-    },
-    "macos-design-guidelines": {
-      "source": "ehmo/platform-design-skills",
-      "sourceType": "github",
-      "computedHash": "fdbeb208feb60e5ed08226e4e1e714eade6cfe6530ad27c792992823de63ca0d"
-    },
-    "macos-menubar-tuist-app": {
-      "source": "dimillian/skills",
-      "sourceType": "github",
-      "computedHash": "8724ada68cf08a1a965321a688969825bf33be8d344ba2ce67207c6ce604e76a"
-    },
-    "packaging-notarization": {
-      "source": "mosif16/codex-skills@build-macos-apps",
-      "sourceType": "github",
-      "computedHash": "fb89e445b4aa0a9536070e462a3d3c00523b64ca9cb7ee8513ce01623e497e83"
-    },
-    "readme-i18n": {
-      "source": "xixu-me/skills",
-      "sourceType": "github",
-      "computedHash": "667e1a9ec1be5d8cd28113558740af67861e372792587bf0e65d14ddebbcf38e"
-    },
-    "scan-code-review-rules": {
-      "source": "duc01226/easyplatform",
-      "sourceType": "github",
-      "computedHash": "80c6dc712dbb333cd7007b89eb9f0eea4e091de68f44a6f183d02ecd1c635153"
-    },
-    "style-guide": {
-      "source": "daleseo/korean-skills",
-      "sourceType": "github",
-      "computedHash": "1c007481f87dc43a2ea26f10fded48492f400354e36c63acde7f60f37e8b5283"
-    },
-    "swift-architecture-skill": {
-      "source": "efremidze/swift-architecture-skill",
-      "sourceType": "github",
-      "computedHash": "67d3359424b19084631998def14666fd5a77284a45ac0353c41a86a7ed216923"
     },
     "swift-concurrency": {
       "source": "avdlee/swift-concurrency-agent-skill",
@@ -106,25 +21,10 @@
       "sourceType": "github",
       "computedHash": "12da57e9a9c515a5602f842624e694cf922ec395990e8f92c0a3093e165e5c8c"
     },
-    "swift-testing-expert": {
-      "source": "avdlee/swift-testing-agent-skill",
-      "sourceType": "github",
-      "computedHash": "ee2a73c7148264cb7e0a0819d3063225541e57162353d97707d9fab830d27ba6"
-    },
     "swiftui-expert-skill": {
       "source": "avdlee/swiftui-agent-skill",
       "sourceType": "github",
       "computedHash": "84aa533bdca25a02ce35738619121d203d55eb8ff2892535c150bd9ee85fda30"
-    },
-    "swiftui-pro": {
-      "source": "jeffallan/claude-skills",
-      "sourceType": "github",
-      "computedHash": "c1c007481f87dc43a2ea26f10fded48492f400354e36c63acde7f60f37e8b5283"
-    },
-    "test-triage": {
-      "source": "mosif16/codex-skills@build-macos-apps",
-      "sourceType": "github",
-      "computedHash": "7bc0e05c8fa666d45ec7039d9e2d49297fe5ec8bdf8597489b7b62250857bddb"
     },
     "whisper-transcription": {
       "source": "guia-matthieu/clawfu-skills",
